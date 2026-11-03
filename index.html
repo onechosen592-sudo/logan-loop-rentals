@@ -231,6 +231,29 @@ body:not(.owner) #ownerPanel, body:not(.owner) .fleet .rm, body:not(.owner) #dea
 @keyframes hvDrive { from { transform: translate(-90px, 300px); } to { transform: translate(560px, 300px); } }
 @media (prefers-reduced-motion: reduce) { .hv-scene.on * { animation: none !important; } .hv-scene.on .hv-drive { transform: translate(320px, 300px); } }
 
+/* pages */
+[data-page][hidden] { display: none !important; }
+body:not(.owner) .owner-only { display: none !important; }
+nav a[aria-current="page"] { border-color: var(--gold); }
+.pagebar { margin-bottom: 20px; }
+.homebtn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 14px; border: 1px solid var(--gold); background: var(--panel); color: var(--paper); border-radius: 999px; }
+.homebtn:hover { border-color: var(--orange); }
+.explore { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.xcard { display: grid; gap: 6px; text-decoration: none; color: var(--paper); background: var(--panel); border: 1px solid var(--gold); padding: 18px 20px; border-radius: 14px; }
+.xcard:hover { border-color: var(--orange); }
+.xcard b { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.35rem; line-height: 1.05; }
+.xcard b::after { content: " \2192"; color: var(--orange); }
+.xcard span { color: var(--muted); font-size: 0.95rem; }
+.home-about { padding-top: 8px; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.about-text p { margin-top: 12px; font-size: 1.08rem; max-width: 56ch; }
+.contact-card { background: var(--panel); border: 2px solid var(--gold); padding: 22px; display: grid; gap: 14px; border-radius: 14px; }
+.contact-card h3 { color: var(--orange); }
+.contact-card dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; }
+.contact-card dt { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--olive-lite); padding-top: 3px; }
+.contact-card dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 860px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+
 /* deals */
 .deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 26px; }
 .dealcol { border: 3px solid var(--gold); box-shadow: 0 0 0 5px var(--black), 0 0 0 7px var(--gold); background: var(--panel); padding: 22px 22px 8px; margin: 8px; min-width: 0; }
@@ -345,25 +368,27 @@ input, select, textarea { border-radius: 10px; }
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Logan Loop Rentals home">
+    <a class="brand" href="#home" aria-label="Logan Loop Rentals home">
       <span class="brand-mark" aria-hidden="true">
         <svg width="42" height="46" viewBox="10 18 80 88" fill="none"><path d="M17 78 A34 34 0 1 1 83 78" stroke="currentColor" stroke-width="10" stroke-linecap="round"/><path d="M70 34 A34 34 0 0 1 83 78" stroke="var(--orange)" stroke-width="10" stroke-linecap="round"/><path d="M50 66 L71 42" stroke="var(--orange)" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="66" r="7" fill="var(--orange)"/><text x="50" y="100" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="17" fill="currentColor">24/7</text></svg>
       </span>
       <span class="brand-name">Logan Loop <span>Rentals</span></span>
     </a>
     <nav aria-label="Main">
+      <a href="#home">Home</a>
       <a href="#howto">How it works</a>
       <a href="#deals">Deals</a>
       <a href="#fleet">Cars</a>
       <a href="#drivers">Drivers</a>
-      <a href="#delivery">Delivery</a>
+      <a href="#checkin">Check-in</a>
+      <a href="#owner" class="owner-only">Dashboard</a>
       <a class="cta" href="#book">Book now</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
-  <section class="dash" id="ownerPanel" aria-label="Owner dashboard">
+  <section class="dash" id="ownerPanel" data-page="owner" aria-label="Owner dashboard">
     <div class="wrap">
       <div class="dash-top">
         <div><div class="eyebrow">Owner only</div><h2>Dashboard</h2></div>
@@ -510,7 +535,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-<div class="hero">
+<div class="hero" data-page="home">
     <svg class="scene" viewBox="0 0 1440 330" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
       <defs>
         <radialGradient id="sunG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffd08a"/><stop offset="60%" stop-color="#ffab55"/><stop offset="100%" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient>
@@ -550,7 +575,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </div>
 
-  <div class="strip">
+  <div class="strip" data-page="home">
     <div class="wrap">
       <div class="cell"><div class="big"><em>24</em> hours</div><div class="sm">Open every day, every hour</div></div>
       <div class="cell"><div class="big">100% <em>contactless</em></div><div class="sm">Booked and paid online</div></div>
@@ -558,7 +583,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </div>
 
-  <div class="band">
+  <div class="band" data-page="home">
     <div class="wrap">
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><circle cx="18" cy="18" r="15" stroke="#ff7a1a" stroke-width="3"/><path d="M7.4 28.6 28.6 7.4" stroke="#ff7a1a" stroke-width="3"/><rect x="9" y="16" width="14" height="4" fill="#98a35a"/><rect x="24" y="16" width="3" height="4" fill="#b8921a"/></svg>
       <b>No smoking in any car</b>
@@ -566,7 +591,42 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </div>
 
-  <section id="howto">
+  <section class="home-explore" data-page="home">
+    <div class="wrap">
+      <div class="head"><div><div class="eyebrow">Start here</div><h2>What do you need?</h2></div></div>
+      <div class="explore">
+        <a class="xcard" href="#fleet"><b>See our cars</b><span>Sedans, SUVs, vans and trucks with daily rates.</span></a>
+        <a class="xcard" href="#deals"><b>Weekly &amp; monthly deals</b><span>Pay less when you rent for 7 or 30 days.</span></a>
+        <a class="xcard" href="#howto"><b>How pickup works</b><span>Step-by-step video in 7 languages.</span></a>
+        <a class="xcard" href="#book"><b>Book a car</b><span>Reserve and pay online in a few minutes.</span></a>
+        <a class="xcard" href="#drivers"><b>Rideshare &amp; delivery drivers</b><span>Uber, Lyft and DoorDash drivers apply here.</span></a>
+        <a class="xcard" href="#delivery"><b>Delivery</b><span>We bring the car to you, 7 AM to 4 PM.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-about" data-page="home">
+    <div class="wrap about-grid">
+      <div class="about-text">
+        <div class="eyebrow">About us</div>
+        <h2>Car rental without the counter</h2>
+        <p>Logan Loop Rentals is a contactless car rental company. You book, pay, verify your ID and check in online, then pick up your car any hour of the day. Rather not come to us? We deliver between 7 AM and 4 PM.</p>
+      </div>
+      <div class="contact-card">
+        <h3>Find us</h3>
+        <dl>
+          <dt>Hours</dt><dd>Open 24 hours, every day</dd>
+          <dt>Delivery</dt><dd>7:00 AM to 4:00 PM</dd>
+          <dt data-site="address">Location</dt><dd data-site="address"></dd>
+          <dt data-site="phone">Phone</dt><dd data-site="phone"></dd>
+          <dt data-site="email">Email</dt><dd data-site="email"></dd>
+        </dl>
+        <a class="btn" href="#book">Book a car</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="howto" data-page="howto">
     <div class="wrap">
       <div class="langs" role="group" aria-label="Language"><button type="button" class="lang" id="lang-en" lang="en">English</button><button type="button" class="lang" id="lang-es" lang="es">Español</button><button type="button" class="lang" id="lang-ht" lang="ht">Kreyòl ayisyen</button><button type="button" class="lang" id="lang-pt" lang="pt">Português</button><button type="button" class="lang" id="lang-fr" lang="fr">Français</button><button type="button" class="lang" id="lang-ar" lang="ar" dir="rtl">العربية</button><button type="button" class="lang" id="lang-zh" lang="zh">中文</button></div>
       <div id="howtoBody" lang="en" dir="ltr">
@@ -589,7 +649,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-  <section id="deals" style="padding-bottom: 8px">
+  <section id="deals" data-page="deals" style="padding-bottom: 8px">
     <div class="wrap">
       <div class="head">
         <div>
@@ -605,7 +665,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-  <section id="fleet">
+  <section id="fleet" data-page="fleet">
     <div class="wrap">
       <div class="head">
         <div>
@@ -619,7 +679,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-  <section class="book" id="book">
+  <section class="book" id="book" data-page="book">
     <div class="wrap">
       <div class="head">
         <div>
@@ -724,7 +784,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-  <section id="drivers" style="background: var(--coal); border-block: 2px solid var(--gold)">
+  <section id="drivers" data-page="drivers" style="background: var(--coal); border-block: 2px solid var(--gold)">
     <div class="wrap">
       <div class="head">
         <div>
@@ -796,7 +856,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-<section id="checkin">
+<section id="checkin" data-page="checkin">
     <div class="wrap">
       <div class="head">
         <div>
@@ -828,7 +888,7 @@ input, select, textarea { border-radius: 10px; }
     </div>
   </section>
 
-  <section id="delivery">
+  <section id="delivery" data-page="delivery">
     <div class="wrap">
       <div class="head">
         <div>
@@ -871,7 +931,12 @@ input, select, textarea { border-radius: 10px; }
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   // Site settings. Put your Stripe Payment Link, your ID verification link and the email that should receive driver applications between the quotes, then upload the file again.
-  var SITE = { stripeLink: "", idLink: "", applyEmail: "" };
+  var SITE = { stripeLink: "", idLink: "", applyEmail: "", address: "", phone: "", email: "" };
+  Array.prototype.forEach.call(document.querySelectorAll("[data-site]"), function (el) {
+    var v = SITE[el.getAttribute("data-site")] || "";
+    if (!v) { el.hidden = true; return; }
+    if (el.tagName === "DD") el.textContent = v;
+  });
   var SAMPLES = [
     { id: "s1", name: "Compact Sedan", type: "car", seats: 5, trans: "Automatic", fuel: "Gas", rate: 49, sample: true },
     { id: "s2", name: "Midsize SUV", type: "suv", seats: 5, trans: "Automatic", fuel: "Hybrid", rate: 72, sample: true },
@@ -1347,7 +1412,7 @@ input, select, textarea { border-radius: 10px; }
     if (alertsOn) { dismissed = false; try { if (window.Notification && Notification.permission === "default") Notification.requestPermission(); } catch (e) {} }
     updateAlertUi();
   });
-  $("alertShow").addEventListener("click", function () { showTab("today"); $("ownerPanel").scrollIntoView({ block: "start" }); });
+  $("alertShow").addEventListener("click", function () { showTab("today"); if (location.hash === "#owner") { if (window.llrRoute) llrRoute(); } else { location.hash = "owner"; } });
   $("alertClose").addEventListener("click", function () { dismissed = true; tripMsg = ""; syncBanner(); });
 
   // maintenance every 3,000 miles
@@ -1634,6 +1699,7 @@ input, select, textarea { border-radius: 10px; }
     $("ownerLogin").textContent = on ? "Log out" : "Login";
     try { if (on) sessionStorage.setItem("llr-owner", "1"); else sessionStorage.removeItem("llr-owner"); } catch (e) {}
     if (!on) $("ownerPanel").open = false;
+    if (!on && location.hash === "#owner") location.hash = "home";
   }
   function sha256(ascii) {
     function rr(v, n) { return (v >>> n) | (v << (32 - n)); }
@@ -1675,7 +1741,7 @@ input, select, textarea { border-radius: 10px; }
     var h = sha256(v.trim().toLowerCase().replace(/\s+/g, ""));
     if (h !== OWNER_HASH) { $("loginErr").textContent = "That passcode is not right."; $("loginPass").select(); return; }
     $("loginBox").hidden = true; setOwner(true); syncBanner(); checkTrips();
-    showTab("today"); $("ownerPanel").scrollIntoView({ block: "start" });
+    showTab("today"); if (location.hash === "#owner") { if (window.llrRoute) llrRoute(); } else { location.hash = "owner"; }
   });
 
   // ID verification
@@ -1788,3 +1854,35 @@ input, select, textarea { border-radius: 10px; }
   setDefaults(); refresh();
 })();
 </script>
+
+<script>
+(function () {
+  var MAP = { "": "home", home: "home", top: "home", howto: "howto", deals: "deals", fleet: "fleet", book: "book", drivers: "drivers", checkin: "checkin", delivery: "delivery", owner: "owner", ownerPanel: "owner" };
+  var TITLES = { howto: "How it works", deals: "Deals", fleet: "Our cars", book: "Book a car", drivers: "Drivers", checkin: "Trip check-in", delivery: "Delivery", owner: "Owner dashboard" };
+  var pages = Array.prototype.slice.call(document.querySelectorAll("[data-page]"));
+  pages.forEach(function (el) {
+    if (el.getAttribute("data-page") === "home" || el.querySelector(".pagebar")) return;
+    var w = el.querySelector(".wrap") || el, bar = document.createElement("div");
+    bar.className = "pagebar"; bar.innerHTML = '<a class="homebtn" href="#home">&larr; Home</a>';
+    w.insertBefore(bar, w.firstChild);
+  });
+  var current = null;
+  function route() {
+    var key = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+    var page = Object.prototype.hasOwnProperty.call(MAP, key) ? MAP[key] : "home";
+    if (page === "owner" && !document.body.classList.contains("owner")) page = "home";
+    pages.forEach(function (el) { el.hidden = el.getAttribute("data-page") !== page; });
+    Array.prototype.forEach.call(document.querySelectorAll("nav a"), function (a) {
+      var h = (a.getAttribute("href") || "").replace(/^#/, "");
+      if (MAP[h] === page) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    document.title = page === "home" ? "Logan Loop Rentals" : TITLES[page] + " | Logan Loop Rentals";
+    if (page !== current) window.scrollTo(0, 0);
+    current = page;
+  }
+  window.addEventListener("hashchange", route);
+  window.llrRoute = route;
+  route();
+})();
+</script>
+
