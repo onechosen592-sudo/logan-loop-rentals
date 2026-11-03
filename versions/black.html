@@ -1,0 +1,1741 @@
+<title>Logan Loop Rentals</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2222%22%20fill%3D%22%23fcf0da%22/%3E%3Cg%20transform%3D%22translate%280%20-8%29%22%3E%3Cpath%20d%3D%22M17%2078%20A34%2034%200%201%201%2083%2078%22%20fill%3D%22none%22%20stroke%3D%22%2326190e%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M70%2034%20A34%2034%200%200%201%2083%2078%22%20fill%3D%22none%22%20stroke%3D%22%23e8670c%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M50%2066%20L71%2042%22%20stroke%3D%22%23e8670c%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2266%22%20r%3D%229%22%20fill%3D%22%23e8670c%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: black road-sign look. A framed hero sign with double dark-yellow lines, an olive hours strip, then fleet, booking, delivery. Single dark theme by design. */
+:root {
+  --black: #100c08;
+  --coal: #1b140d;
+  --panel: #241b12;
+  --olive: #66702f;
+  --olive-deep: #41401d;
+  --olive-lite: #98a35a;
+  --orange: #ff7a1a;
+  --orange-deep: #d95f06;
+  --gold: #c4951c;
+  --paper: #f6ead4;
+  --muted: #b8a688;
+  --danger: #ff8a7a;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--paper);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--display); text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.98; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; }
+h3 { font-size: 1.6rem; font-weight: 800; }
+p { margin: 0; }
+a { color: inherit; }
+.eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* top bar */
+.topbar { border-bottom: 2px solid var(--gold); background: var(--black); }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand-mark { width: 42px; height: 46px; display: grid; place-items: center; color: var(--paper); }
+.brand-name { font-family: var(--display); font-weight: 900; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; }
+.brand-name span { color: var(--orange); }
+nav { display: flex; gap: 6px; flex-wrap: wrap; }
+nav a { text-decoration: none; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 12px; border: 1px solid transparent; }
+nav a:hover { border-color: var(--gold); }
+nav a.cta { background: var(--orange); color: var(--black); font-weight: 500; }
+nav a.cta:hover { background: var(--paper); border-color: var(--paper); }
+
+/* hero */
+.hero { padding-block: 56px 48px; background:
+  radial-gradient(700px 360px at 90% 0%, rgba(255,122,26,0.16), transparent 70%), radial-gradient(800px 380px at 0% 100%, rgba(102,112,47,0.28), transparent 70%), var(--black); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.sign {
+  background: var(--coal);
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 0 6px var(--black), 0 0 0 9px var(--gold);
+  padding: 34px 30px 30px;
+  margin: 12px;
+}
+.sign h1 { font-size: clamp(3rem, 9vw, 6rem); font-weight: 900; }
+.sign h1 em { font-style: normal; color: var(--orange); }
+.sign .tag { margin-top: 18px; font-size: 1.2rem; max-width: 34ch; }
+.sign .row { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.25rem; padding: 12px 22px; border: 2px solid var(--orange); background: var(--orange); color: var(--black); cursor: pointer; text-decoration: none; display: inline-block; line-height: 1.1; }
+.btn:hover { background: var(--paper); border-color: var(--paper); }
+.btn.ghost { background: transparent; color: var(--paper); border-color: var(--gold); }
+.btn.ghost:hover { background: var(--gold); color: var(--black); }
+.btn.small { font-size: 1rem; padding: 8px 14px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border: 1px solid var(--gold); }
+.steps li { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(184,146,26,0.45); background: var(--panel); }
+.steps li:last-child { border-bottom: 0; }
+.steps .n { font-family: var(--display); font-weight: 900; font-size: 2.2rem; color: var(--orange); line-height: 1; }
+.steps b { font-family: var(--display); text-transform: uppercase; font-size: 1.25rem; letter-spacing: 0.03em; display: block; }
+.steps span { color: var(--muted); font-size: 0.95rem; }
+
+/* hours strip */
+.strip { background: var(--olive-deep); border-block: 2px solid var(--gold); }
+.strip .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.strip .cell { padding: 20px 18px; border-left: 1px solid rgba(184,146,26,0.55); }
+.strip .cell:first-child { border-left: 0; padding-left: 0; }
+.strip .big { font-family: var(--display); font-weight: 900; font-size: 2.1rem; text-transform: uppercase; line-height: 1; }
+.strip .big em { font-style: normal; color: var(--orange); }
+.strip .sm { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: #e4d5b4; margin-top: 6px; }
+
+section { padding-block: 64px; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.head p { color: var(--muted); max-width: 46ch; margin-top: 10px; }
+
+/* fleet */
+.fleet { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 20px; }
+.car { background: var(--panel); border: 1px solid var(--gold); display: flex; flex-direction: column; min-width: 0; }
+.car .pic { aspect-ratio: 16 / 10; background: var(--olive-deep); border-bottom: 1px solid var(--gold); display: grid; place-items: center; overflow: hidden; position: relative; max-width: 100%; }
+.car .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.car .pic svg { width: 78%; height: auto; }
+.badge { position: absolute; top: 10px; left: 10px; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--black); color: var(--gold); border: 1px solid var(--gold); padding: 3px 7px; }
+.car .body { padding: 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.specs { display: flex; flex-wrap: wrap; gap: 6px; }
+.specs span { font-family: var(--mono); font-size: 0.74rem; border: 1px solid rgba(184,146,26,0.5); padding: 2px 8px; color: var(--muted); }
+.car .foot { margin-top: auto; display: flex; align-items: end; justify-content: space-between; gap: 10px; }
+.price { font-family: var(--display); font-weight: 900; font-size: 2rem; line-height: 1; color: var(--orange); }
+.price small { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); font-weight: 400; letter-spacing: 0.08em; }
+.rm { background: none; border: 0; color: var(--muted); font-family: var(--mono); font-size: 0.72rem; text-decoration: underline; cursor: pointer; padding: 0; text-align: left; }
+
+textarea { font: inherit; color: var(--paper); background: var(--black); border: 1px solid var(--gold); padding: 11px 12px; width: 100%; min-width: 0; border-radius: 0; resize: vertical; }
+.band { background: var(--black); border-bottom: 2px solid var(--gold); }
+.band .wrap { display: flex; align-items: center; gap: 14px; padding-block: 14px; flex-wrap: wrap; }
+.band b { font-family: var(--display); font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--orange); }
+.band span { color: var(--muted); }
+.check { display: flex; gap: 10px; align-items: flex-start; text-transform: none; letter-spacing: 0; font-family: var(--body); font-size: 0.98rem; color: var(--paper); cursor: pointer; }
+.check input { width: auto; margin-top: 4px; accent-color: var(--orange); }
+.platforms { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+
+.idstep { border: 1px solid var(--gold); padding: 14px; margin-top: 14px; display: grid; gap: 10px; justify-items: start; }
+.idstep p { color: var(--muted); }
+
+.avail { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.avail.ok { color: var(--olive-lite); }
+.avail.busy { color: var(--orange); }
+.blk { display: flex; justify-content: space-between; align-items: center; gap: 10px 16px; flex-wrap: wrap; border-top: 1px solid rgba(184,146,26,0.45); padding: 10px 0; }
+.blk .what { min-width: 0; }
+.blk .what small { display: block; color: var(--muted); font-family: var(--mono); font-size: 0.74rem; }
+.blk .acts { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+#alertBar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: var(--orange); color: #1c1e13; display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; font-weight: 600;
+  padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+#alertBar .btn { background: #1c1e13; border-color: #1c1e13; color: #fff3e6; }
+#alertBar .btn.ghost { background: transparent; color: #1c1e13; }
+
+body:not(.owner) #ownerPanel, body:not(.owner) .fleet .rm, body:not(.owner) #deals .rm, body:not(.owner) #alertBar { display: none !important; }
+.ownerlink { background: none; border: 0; padding: 4px 2px; margin-top: 10px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--muted); opacity: 0.28; cursor: pointer; }
+.ownerlink:hover, .ownerlink:focus-visible { opacity: 0.8; }
+#loginBox { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.6); display: grid; place-items: center;
+  padding: 16px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); }
+#loginBox[hidden] { display: none !important; }
+#loginBox form { background: var(--panel); border: 3px solid var(--gold); padding: 22px; width: min(100%, 360px); display: grid; gap: 12px; }
+
+.photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 14px; }
+.shot { border: 1px solid var(--gold); padding: 10px; display: grid; gap: 8px; min-width: 0; background: var(--panel); }
+.shot .prev { aspect-ratio: 4 / 3; max-width: 100%; background: var(--olive-deep); display: grid; place-items: center; overflow: hidden; color: var(--muted); font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.shot .prev img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shot input[type="file"] { font-size: 0.8rem; padding: 6px; }
+.thumbs { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 12px; }
+.thumbs figure { margin: 0; width: 92px; }
+.thumbs img { width: 92px; height: 69px; object-fit: cover; border: 1px solid var(--gold); display: block; }
+.thumbs figcaption { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.tt { display: flex; gap: 6px; align-items: center; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; color: var(--muted); }
+.tt input { width: auto; padding: 4px 6px; }
+
+.dash { background: var(--coal); border-bottom: 2px solid var(--gold); }
+.dash .wrap { padding-block: 28px 36px; }
+.dash-top { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: 12px; margin-bottom: 22px; }
+#alertBar[hidden] { display: none !important; }
+.tile { text-align: left; background: var(--panel); border: 1px solid var(--gold); padding: 14px 16px; cursor: pointer; color: var(--paper); font: inherit; display: grid; gap: 4px; }
+.tile:hover { border-color: var(--orange); }
+.tile .num { font-family: var(--display); font-weight: 900; font-size: 2.4rem; line-height: 1; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tile.hot .num { color: var(--orange); }
+.tile .lab { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 2px solid var(--gold); }
+.tab { background: none; border: 1px solid transparent; border-bottom: 0; padding: 10px 14px; font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper); cursor: pointer; }
+.tab:hover { border-color: var(--gold); }
+.tab[aria-selected="true"] { background: var(--orange); color: #1c1e13; border-color: var(--orange); }
+.pane { padding-top: 22px; }
+.pane h3 { margin-bottom: 8px; }
+.pane .gap { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--gold); }
+
+/* how-to */
+#howto { padding-bottom: 32px; }
+.langs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.lang { font: inherit; font-size: 0.92rem; padding: 7px 14px; border: 1px solid var(--gold); background: var(--panel); color: var(--paper); border-radius: 999px; cursor: pointer; }
+.lang:hover { border-color: var(--orange); }
+.lang[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #1c1e13; font-weight: 600; }
+.howto-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 860px) { .howto-grid { grid-template-columns: minmax(0, 1fr); } }
+.player { border: 3px solid var(--gold); background: var(--panel); overflow: hidden; min-width: 0; }
+.player svg { display: block; width: 100%; height: auto; max-width: 100%; aspect-ratio: 16 / 9; }
+.pbar { display: flex; gap: 12px; align-items: center; padding: 12px 14px; flex-wrap: wrap; }
+.segs { flex: 1; display: flex; gap: 5px; min-width: 160px; }
+.seg { flex: 1; height: 10px; border: 0; padding: 0; background: var(--olive-deep); cursor: pointer; border-radius: 5px; }
+.seg.done { background: var(--gold); }
+.seg.cur { background: var(--orange); }
+.caption { padding: 0 14px 18px; min-height: 6.2em; }
+.caption b { font-family: var(--display); text-transform: uppercase; font-size: 1.35rem; letter-spacing: 0.03em; }
+.caption p { color: var(--muted); margin-top: 4px; }
+.hsteps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hstep { width: 100%; text-align: start; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 12px 14px; font: inherit; color: var(--paper); background: var(--panel); border: 1px solid rgba(184,146,26,0.5); cursor: pointer; }
+.hstep .n { font-family: var(--display); font-weight: 900; font-size: 1.9rem; line-height: 1; color: var(--muted); }
+.hstep b { display: block; font-family: var(--display); text-transform: uppercase; font-size: 1.15rem; letter-spacing: 0.03em; }
+.hstep span span { color: var(--muted); font-size: 0.93rem; }
+.hstep[aria-current="step"] { border-color: var(--orange); box-shadow: inset 4px 0 0 var(--orange); }
+[dir="rtl"] .hstep[aria-current="step"] { box-shadow: inset -4px 0 0 var(--orange); }
+.hstep[aria-current="step"] .n { color: var(--orange); }
+#howtoBody[lang="zh"] h2, #howtoBody[lang="ar"] h2, #howtoBody[lang="zh"] b, #howtoBody[lang="ar"] b { text-transform: none; letter-spacing: 0; }
+/* animation scenes */
+.hv-scene { display: none; } .hv-scene.on { display: inline; }
+.sv-bg { fill: var(--olive-deep); } .sv-panel { fill: var(--panel); stroke: var(--gold); stroke-width: 3; }
+.sv-screen { fill: #fff8ec; } .sv-soft { fill: var(--muted); opacity: 0.35; } .sv-gold { fill: var(--gold); }
+.sv-or { fill: var(--orange); } .sv-ol { fill: var(--olive); } .sv-dk { fill: #2b2014; } .sv-red { fill: var(--orange); }
+.sv-win { fill: #fff3df; opacity: 0.85; } .sv-plate { fill: #fff8ec; stroke: #2b2014; stroke-width: 2; }
+.sv-box { fill: #3a2a1b; } .sv-key { fill: #5a4630; } .sv-ground { fill: var(--olive); opacity: 0.55; }
+.sv-dash { fill: var(--gold); opacity: 0.6; } .sv-sun { fill: var(--orange); opacity: 0.55; }
+.sv-tick { fill: none; stroke: #fff8ec; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 60; }
+.sv-arc { fill: none; stroke: var(--gold); stroke-width: 8; stroke-linecap: round; } .sv-needle { stroke: var(--orange); stroke-width: 5; stroke-linecap: round; }
+.hv-scene.on .hv-pop { transform-box: fill-box; transform-origin: center; animation: hvPop 0.7s ease-out both; }
+.hv-scene.on .hv-draw { animation: hvDraw 0.6s 0.5s ease-out both; }
+.hv-scene.on .hv-drop { animation: hvDrop 0.9s ease-out both; }
+.hv-scene.on .hv-digit { animation: hvFade 0.3s ease-out both; }
+.hv-scene.on .hv-keyout { animation: hvKey 2.4s ease-in-out both; }
+.hv-scene.on .hv-flash { animation: hvFlash 0.9s ease-in-out both; }
+.hv-scene.on .hv-needle { transform-origin: 0 0; animation: hvNeedle 1.4s 2.2s ease-out both; }
+.hv-scene.on .hv-drive { animation: hvDrive 4.6s ease-in-out both; }
+@keyframes hvPop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+@keyframes hvDraw { from { stroke-dashoffset: 60; } to { stroke-dashoffset: 0; } }
+@keyframes hvDrop { 0% { transform: translateY(-90px); opacity: 0; } 60% { transform: translateY(8px); opacity: 1; } 100% { transform: translateY(0); } }
+@keyframes hvFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hvKey { 0%, 45% { transform: translateX(-60px); opacity: 0; } 70% { opacity: 1; } 100% { transform: translateX(30px); opacity: 1; } }
+@keyframes hvFlash { 0% { opacity: 0; transform: translateY(6px); } 50% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+@keyframes hvNeedle { from { transform: rotate(-90deg); } to { transform: rotate(0deg); } }
+@keyframes hvDrive { from { transform: translate(-90px, 300px); } to { transform: translate(560px, 300px); } }
+@media (prefers-reduced-motion: reduce) { .hv-scene.on * { animation: none !important; } .hv-scene.on .hv-drive { transform: translate(320px, 300px); } }
+
+/* deals */
+.deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 26px; }
+.dealcol { border: 3px solid var(--gold); box-shadow: 0 0 0 5px var(--black), 0 0 0 7px var(--gold); background: var(--panel); padding: 22px 22px 8px; margin: 8px; min-width: 0; }
+.dealcol .ttl { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-bottom: 12px; }
+.dealcol .ttl h3 { color: var(--orange); font-size: 2rem; }
+.dealcol .ttl span { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.deal { border-top: 1px solid rgba(184,146,26,0.5); padding: 16px 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; }
+.deal .t { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 1.3rem; letter-spacing: 0.03em; line-height: 1.05; }
+.deal .d { color: var(--muted); font-size: 0.93rem; margin-top: 4px; }
+.deal .p { text-align: right; }
+.deal .save { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--olive-lite); margin-top: 4px; }
+.deal .acts { grid-column: 1 / -1; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.deal .badge { position: static; }
+.sub { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 1.4rem; letter-spacing: 0.04em; margin: 26px 0 8px; padding-top: 20px; border-top: 1px solid var(--gold); }
+
+/* owner panel */
+details.owner { margin-top: 32px; border: 2px dashed var(--gold); background: var(--coal); }
+.owner summary { cursor: pointer; padding: 16px 18px; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 1.4rem; letter-spacing: 0.04em; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.owner summary::-webkit-details-marker { display: none; }
+.owner summary::after { content: "+"; color: var(--orange); font-size: 1.6rem; line-height: 1; }
+.owner[open] summary::after { content: "\2212"; }
+.owner .inner { padding: 4px 18px 20px; }
+.owner .inner > p { color: var(--muted); margin-bottom: 16px; max-width: 70ch; }
+
+/* forms */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label, .lbl { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--olive-lite); }
+input, select { font: inherit; color: var(--paper); background: var(--black); border: 1px solid var(--gold); padding: 11px 12px; width: 100%; min-width: 0; border-radius: 0; }
+input::placeholder { color: #7f6e58; }
+input[type="file"] { padding: 8px; font-size: 0.9rem; }
+input[type="radio"] { width: auto; accent-color: var(--orange); }
+input:disabled { opacity: 0.5; }
+
+/* booking */
+.book { background: var(--coal); border-block: 2px solid var(--gold); }
+.book-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+fieldset { border: 1px solid var(--gold); padding: 18px; margin: 0 0 20px; min-width: 0; }
+legend { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 1.35rem; letter-spacing: 0.04em; padding: 0 10px; color: var(--paper); }
+.choice { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; margin-bottom: 14px; }
+.choice label { display: flex; gap: 10px; align-items: flex-start; border: 1px solid rgba(184,146,26,0.55); padding: 12px; cursor: pointer; text-transform: none; letter-spacing: 0; font-family: var(--body); font-size: 0.98rem; color: var(--paper); }
+.choice label:has(input:checked) { border-color: var(--orange); background: rgba(255,122,26,0.08); }
+.choice small { display: block; color: var(--muted); font-size: 0.85rem; }
+.hint { font-size: 0.88rem; color: var(--muted); }
+.note { font-size: 0.86rem; color: var(--muted); border-left: 3px solid var(--orange); padding-left: 10px; margin-top: 12px; }
+.err { color: var(--danger); font-weight: 600; min-height: 1.4em; margin: 6px 0 14px; }
+.summary { position: sticky; top: 16px; border: 3px solid var(--gold); box-shadow: 0 0 0 5px var(--coal), 0 0 0 7px var(--gold); background: var(--panel); padding: 22px; margin: 8px; }
+.summary dl { margin: 14px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-variant-numeric: tabular-nums; }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; text-align: right; font-family: var(--mono); }
+.summary .total { border-top: 1px solid var(--gold); padding-top: 12px; margin-top: 6px; font-family: var(--display); font-size: 1.5rem; text-transform: uppercase; font-weight: 800; }
+.summary .total.v { color: var(--orange); font-family: var(--display); font-size: 2rem; }
+.confirm { border: 3px solid var(--orange); padding: 28px; background: var(--panel); }
+.confirm .ref { font-family: var(--mono); font-size: 1.4rem; color: var(--orange); margin: 10px 0; }
+
+/* delivery */
+.delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; }
+.card { border: 1px solid var(--gold); background: var(--panel); padding: 24px; }
+.card h3 { margin-bottom: 10px; color: var(--orange); }
+.card p { color: var(--muted); }
+.clock { font-family: var(--display); font-weight: 900; font-size: 3.4rem; line-height: 1; text-transform: uppercase; }
+.clock em { font-style: normal; color: var(--orange); }
+
+footer { border-top: 2px solid var(--gold); padding-block: 28px; color: var(--muted); font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.06em; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .hero-grid, .book-grid { grid-template-columns: minmax(0, 1fr); }
+  .summary { position: static; }
+  .strip .wrap { grid-template-columns: minmax(0, 1fr); }
+  .strip .cell, .strip .cell:first-child { border-left: 0; padding-left: 0; border-top: 1px solid rgba(184,146,26,0.55); }
+  .strip .cell:first-child { border-top: 0; }
+  section { padding-block: 48px; }
+}
+@media (max-width: 520px) {
+  .sign { padding: 24px 18px 22px; margin: 8px 6px; }
+  nav a { padding: 6px 8px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Logan Loop Rentals home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="42" height="46" viewBox="10 18 80 88" fill="none"><path d="M17 78 A34 34 0 1 1 83 78" stroke="currentColor" stroke-width="10" stroke-linecap="round"/><path d="M70 34 A34 34 0 0 1 83 78" stroke="var(--orange)" stroke-width="10" stroke-linecap="round"/><path d="M50 66 L71 42" stroke="var(--orange)" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="66" r="7" fill="var(--orange)"/><text x="50" y="100" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="17" fill="currentColor">24/7</text></svg>
+      </span>
+      <span class="brand-name">Logan Loop <span>Rentals</span></span>
+    </a>
+    <nav aria-label="Main">
+      <a href="#howto">How it works</a>
+      <a href="#deals">Deals</a>
+      <a href="#fleet">Cars</a>
+      <a href="#drivers">Drivers</a>
+      <a href="#delivery">Delivery</a>
+      <a class="cta" href="#book">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="dash" id="ownerPanel" aria-label="Owner dashboard">
+    <div class="wrap">
+      <div class="dash-top">
+        <div><div class="eyebrow">Owner only</div><h2>Dashboard</h2></div>
+        <button class="btn ghost small" type="button" id="dashLogout">Log out</button>
+      </div>
+
+      <div class="tiles">
+        <button type="button" class="tile" data-go="today"><span class="num" id="sumTrips">0</span><span class="lab">Trips starting today</span></button>
+        <button type="button" class="tile" data-go="today"><span class="num" id="sumCheck">0</span><span class="lab">Pickup check-ins missing</span></button>
+        <button type="button" class="tile" data-go="today"><span class="num" id="sumTuro">0</span><span class="lab">To block on Turo</span></button>
+        <button type="button" class="tile" data-go="service"><span class="num" id="sumService">0</span><span class="lab">Cars due for service</span></button>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Owner tools">
+        <button type="button" class="tab" role="tab" id="tab-today" aria-controls="pane-today">Today</button>
+        <button type="button" class="tab" role="tab" id="tab-cars" aria-controls="pane-cars">Cars</button>
+        <button type="button" class="tab" role="tab" id="tab-deals" aria-controls="pane-deals">Deals</button>
+        <button type="button" class="tab" role="tab" id="tab-calendar" aria-controls="pane-calendar">Calendar</button>
+        <button type="button" class="tab" role="tab" id="tab-service" aria-controls="pane-service">Service</button>
+        <button type="button" class="tab" role="tab" id="tab-payments" aria-controls="pane-payments">Payments</button>
+      </div>
+
+      <div class="pane" role="tabpanel" id="pane-today" aria-labelledby="tab-today">
+        <h3>Upcoming trips</h3>
+        <p class="hint" style="margin-bottom:8px">In time order. Set a start time to get an alert 30 minutes before.</p>
+        <div id="tripList"></div>
+
+        <div class="gap">
+          <h3>Block on Turo</h3>
+          <p class="hint" style="margin-bottom:8px">Block these days on Turo, then tick the box.</p>
+          <div id="turoList"></div>
+          <button type="button" id="alertBtn" class="btn ghost small" style="margin-top:12px">Turn on alerts</button>
+          <p class="hint" id="alertStatus" style="margin-top:8px"></p>
+        </div>
+
+        <div class="gap">
+          <h3>Check-ins</h3>
+          <p class="hint" style="margin-bottom:8px">Photos, mileage and gas from trip check-ins.</p>
+          <div id="ckList"></div>
+        </div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="pane-cars" aria-labelledby="tab-cars" hidden>
+        <h3>Add a car</h3>
+        <form id="addForm" novalidate>
+          <div class="grid">
+            <div class="field"><label for="aName">Car name</label><input id="aName" placeholder="e.g. 2022 Midsize SUV" maxlength="60"></div>
+            <div class="field"><label for="aType">Body type</label>
+              <select id="aType"><option value="car">Sedan / hatchback</option><option value="suv">SUV / van</option><option value="truck">Truck</option></select></div>
+            <div class="field"><label for="aSeats">Seats</label><input id="aSeats" type="number" min="1" max="15" value="5"></div>
+            <div class="field"><label for="aTrans">Transmission</label>
+              <select id="aTrans"><option>Automatic</option><option>Manual</option></select></div>
+            <div class="field"><label for="aFuel">Fuel</label>
+              <select id="aFuel"><option>Gas</option><option>Hybrid</option><option>Electric</option><option>Diesel</option></select></div>
+            <div class="field"><label for="aRate">Rate per day ($)</label><input id="aRate" type="number" min="1" step="1" placeholder="65"></div>
+            <div class="field full"><label for="aPhoto">Photo (optional)</label><input id="aPhoto" type="file" accept="image/*"></div>
+            <div class="field full"><label for="aLink">Stripe payment link for this car (optional)</label><input id="aLink" type="url" placeholder="https://buy.stripe.com/..."></div>
+          </div>
+          <div class="err" id="addErr" role="alert"></div>
+          <button class="btn" type="submit">Add car</button>
+          <button class="btn ghost" type="button" id="hideSamples" hidden>Remove sample cars</button>
+        </form>
+        <p class="hint" style="margin-top:12px">To remove a car, use Remove listing on its card in the fleet.</p>
+      </div>
+
+      <div class="pane" role="tabpanel" id="pane-deals" aria-labelledby="tab-deals" hidden>
+        <h3>Add a deal</h3>
+        <p class="hint" style="margin-bottom:12px">A flat price for 7 days or 30 days. It shows on the front page.</p>
+        <form id="dealForm" novalidate>
+          <div class="grid">
+            <div class="field"><label for="xTerm">Deal type</label>
+              <select id="xTerm"><option value="weekly">Weekly (7 days)</option><option value="monthly">Monthly (30 days)</option></select></div>
+            <div class="field"><label for="xCar">Car</label><select id="xCar"></select></div>
+            <div class="field"><label for="xPrice">Flat price ($)</label><input id="xPrice" type="number" min="1" step="1" placeholder="299"></div>
+            <div class="field"><label for="xTitle">Deal name</label><input id="xTitle" placeholder="e.g. Weekend plus special" maxlength="40"></div>
+            <div class="field full"><label for="xDetail">Details (optional)</label><input id="xDetail" placeholder="e.g. Includes unlimited miles" maxlength="90"></div>
+            <div class="field full"><label for="xLink">Stripe payment link for this deal (optional)</label><input id="xLink" type="url" placeholder="https://buy.stripe.com/..."></div>
+          </div>
+          <div class="err" id="dealErr" role="alert"></div>
+          <button class="btn" type="submit">Add deal</button>
+        </form>
+      </div>
+
+      <div class="pane" role="tabpanel" id="pane-calendar" aria-labelledby="tab-calendar" hidden>
+        <h3>Block days</h3>
+        <p class="hint" style="margin-bottom:12px">Blocked days can't be booked on the site.</p>
+        <form id="blockForm" novalidate>
+          <div class="grid">
+            <div class="field"><label for="bkCar">Car</label><select id="bkCar"></select></div>
+            <div class="field"><label for="bkFrom">First day</label><input id="bkFrom" type="date"></div>
+            <div class="field"><label for="bkTo">Last day</label><input id="bkTo" type="date"></div>
+          </div>
+          <div class="err" id="bkErr" role="alert"></div>
+          <button class="btn" type="submit">Block these days</button>
+        </form>
+        <div class="gap">
+          <h3>Import from Turo</h3>
+          <p class="hint" style="margin-bottom:12px">Upload the calendar file (.ics) exported from Turo. Importing again replaces that car's earlier Turo days.</p>
+          <form id="icsForm" novalidate>
+            <div class="grid">
+              <div class="field"><label for="imCar">Car</label><select id="imCar"></select></div>
+              <div class="field"><label for="imFile">Calendar file</label><input id="imFile" type="file" accept=".ics,text/calendar"></div>
+            </div>
+            <div class="err" id="imErr" role="alert"></div>
+            <button class="btn ghost" type="submit">Import</button>
+          </form>
+        </div>
+        <div class="gap">
+          <h3>Blocked days</h3>
+          <div id="blockList"></div>
+        </div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="pane-service" aria-labelledby="tab-service" hidden>
+        <h3>Mileage and service</h3>
+        <p class="hint" style="margin-bottom:12px">Service is mandatory every 3,000 miles. A car that reaches it comes off booking until you log the service.</p>
+        <form id="mxForm" novalidate>
+          <div class="grid">
+            <div class="field"><label for="mxCar">Car</label><select id="mxCar"></select></div>
+            <div class="field"><label for="mxMiles">Odometer reading (miles)</label><input id="mxMiles" type="number" min="0" step="1" inputmode="numeric"></div>
+          </div>
+          <div class="err" id="mxErr" role="alert"></div>
+          <button class="btn" type="submit">Save reading</button>
+          <button class="btn ghost" type="button" id="mxService">Log service done</button>
+        </form>
+        <div id="mxList" style="margin-top:16px"></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="pane-payments" aria-labelledby="tab-payments" hidden>
+        <h3>Stripe payment link</h3>
+        <ol class="hint" style="margin:0 0 14px; padding-left: 20px; display:grid; gap:6px; max-width:70ch">
+          <li>In Stripe, open Payment Links and create a link. "Customers choose what to pay" works for any total.</li>
+          <li>Turn on collecting name, email and phone.</li>
+          <li>Paste the link below. A link on a car or deal is used first.</li>
+          <li>To go live for customers, send the link to be built into the site file.</li>
+        </ol>
+        <form id="stripeForm" novalidate>
+          <div class="field full"><label for="sLink">Default Stripe payment link</label><input id="sLink" type="url" placeholder="https://buy.stripe.com/..."></div>
+          <div class="err" id="stripeErr" role="alert"></div>
+          <button class="btn" type="submit">Save payment link</button>
+          <button class="btn ghost" type="button" id="stripeClear">Clear</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="sign">
+        <div class="eyebrow">Contactless car rental</div>
+        <h1 style="margin-top:12px">Book online.<br><em>Drive away.</em></h1>
+        <p class="tag">No counter, no paperwork, no waiting in line. You reserve and pay online, and the car is ready for you. Open 24 hours.</p>
+        <div class="row">
+          <a class="btn" href="#book">Book a car</a>
+          <a class="btn ghost" href="#fleet">See the cars</a>
+        </div>
+      </div>
+      <ol class="steps" aria-label="How it works">
+        <li><span class="n">1</span><div><b>Pick your car</b><span>Browse the fleet and choose your dates.</span></div></li>
+        <li><span class="n">2</span><div><b>Pay online</b><span>Pay by card on Stripe's secure checkout page.</span></div></li>
+        <li><span class="n">3</span><div><b>Get the car</b><span>Pick it up any hour, or have it delivered between 7 AM and 4 PM.</span></div></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="wrap">
+      <div class="cell"><div class="big"><em>24</em> hours</div><div class="sm">Open every day, every hour</div></div>
+      <div class="cell"><div class="big">100% <em>contactless</em></div><div class="sm">Booked and paid online</div></div>
+      <div class="cell"><div class="big">Delivery <em>7a&ndash;4p</em></div><div class="sm">Optional, to your address</div></div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="wrap">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><circle cx="18" cy="18" r="15" stroke="#ff7a1a" stroke-width="3"/><path d="M7.4 28.6 28.6 7.4" stroke="#ff7a1a" stroke-width="3"/><rect x="9" y="16" width="14" height="4" fill="#98a35a"/><rect x="24" y="16" width="3" height="4" fill="#b8921a"/></svg>
+      <b>No smoking in any car</b>
+      <span>A cleaning fee may apply if we find evidence of smoking.</span>
+    </div>
+  </div>
+
+  <section id="howto">
+    <div class="wrap">
+      <div class="langs" role="group" aria-label="Language"><button type="button" class="lang" id="lang-en" lang="en">English</button><button type="button" class="lang" id="lang-es" lang="es">Español</button><button type="button" class="lang" id="lang-ht" lang="ht">Kreyòl ayisyen</button><button type="button" class="lang" id="lang-pt" lang="pt">Português</button><button type="button" class="lang" id="lang-fr" lang="fr">Français</button><button type="button" class="lang" id="lang-ar" lang="ar" dir="rtl">العربية</button><button type="button" class="lang" id="lang-zh" lang="zh">中文</button></div>
+      <div id="howtoBody" lang="en" dir="ltr">
+        <div class="head">
+          <div>
+            <div class="eyebrow">Contactless pickup</div>
+            <h2 id="hvTitle"></h2>
+            <p id="hvSub"></p>
+          </div>
+        </div>
+        <div class="howto-grid">
+          <div class="player">
+            <svg viewBox="0 0 640 360" role="img" aria-labelledby="hvCapTitle"><rect width="640" height="360" class="sv-bg"/><g class="hv-scene on" data-scene="0"><rect x="262" y="40" width="116" height="220" rx="18" class="sv-panel"/><rect x="276" y="62" width="88" height="160" rx="6" class="sv-screen"/><rect x="290" y="80" width="60" height="10" rx="3" class="sv-gold"/><rect x="290" y="98" width="44" height="8" rx="3" class="sv-soft"/><g class="hv-pop"><circle cx="320" cy="160" r="34" class="sv-or"/><path d="M302 160 l12 13 l24 -27" class="sv-tick hv-draw"/></g><rect x="300" y="236" width="40" height="8" rx="4" class="sv-soft"/></g><g class="hv-scene" data-scene="1"><rect x="190" y="90" width="230" height="150" rx="14" class="sv-panel"/><circle cx="250" cy="155" r="30" class="sv-ol"/><circle cx="250" cy="145" r="12" class="sv-screen"/><rect x="300" y="128" width="96" height="10" rx="4" class="sv-gold"/><rect x="300" y="150" width="76" height="8" rx="4" class="sv-soft"/><rect x="300" y="168" width="86" height="8" rx="4" class="sv-soft"/><rect x="214" y="206" width="180" height="10" rx="4" class="sv-soft"/><g class="hv-pop"><circle cx="430" cy="96" r="34" class="sv-or"/><path d="M412 96 l12 13 l24 -27" class="sv-tick hv-draw"/></g></g><g class="hv-scene" data-scene="2"><rect x="0" y="292" width="640" height="68" class="sv-ground"/><rect x="0" y="288" width="640" height="6" class="sv-gold"/><g class="" transform="translate(320 270)"><rect x="-70" y="-30" width="140" height="34" rx="12" class="sv-or"/><path d="M-38 -30 L-24 -56 Q-20 -62 -12 -62 L26 -62 Q34 -62 38 -56 L50 -30 Z" class="sv-or"/><path d="M-28 -32 L-18 -52 L-2 -52 L-2 -32 Z M6 -32 L6 -52 L26 -52 L38 -32 Z" class="sv-win"/><circle cx="-40" cy="6" r="14" class="sv-dk"/><circle cx="40" cy="6" r="14" class="sv-dk"/><circle cx="-40" cy="6" r="5" class="sv-gold"/><circle cx="40" cy="6" r="5" class="sv-gold"/></g><g class="hv-drop"><path d="M320 70 c-30 0 -50 24 -50 48 c0 34 50 76 50 76 s50 -42 50 -76 c0 -24 -20 -48 -50 -48 z" class="sv-red"/><circle cx="320" cy="118" r="18" class="sv-screen"/></g><rect x="290" y="262" width="60" height="16" rx="3" class="sv-plate"/><rect x="298" y="267" width="44" height="6" rx="2" class="sv-dk"/></g><g class="hv-scene" data-scene="3"><rect x="250" y="60" width="140" height="200" rx="16" class="sv-box"/><rect x="270" y="80" width="100" height="34" rx="6" class="sv-screen"/><circle cx="292" cy="104" r="5" class="sv-dk hv-digit" style="animation-delay:0.3s"/><circle cx="311" cy="104" r="5" class="sv-dk hv-digit" style="animation-delay:0.6s"/><circle cx="330" cy="104" r="5" class="sv-dk hv-digit" style="animation-delay:1.0s"/><circle cx="349" cy="104" r="5" class="sv-dk hv-digit" style="animation-delay:1.3s"/><rect x="276" y="128" width="24" height="20" rx="4" class="sv-key"/><rect x="308" y="128" width="24" height="20" rx="4" class="sv-key"/><rect x="340" y="128" width="24" height="20" rx="4" class="sv-key"/><rect x="276" y="156" width="24" height="20" rx="4" class="sv-key"/><rect x="308" y="156" width="24" height="20" rx="4" class="sv-key"/><rect x="340" y="156" width="24" height="20" rx="4" class="sv-key"/><rect x="276" y="184" width="24" height="20" rx="4" class="sv-key"/><rect x="308" y="184" width="24" height="20" rx="4" class="sv-key"/><rect x="340" y="184" width="24" height="20" rx="4" class="sv-key"/><rect x="276" y="212" width="24" height="20" rx="4" class="sv-key"/><rect x="308" y="212" width="24" height="20" rx="4" class="sv-key"/><rect x="340" y="212" width="24" height="20" rx="4" class="sv-key"/><g class="hv-keyout"><circle cx="400" cy="210" r="16" class="sv-gold"/><circle cx="400" cy="210" r="6" class="sv-box"/><rect x="414" y="205" width="52" height="10" rx="3" class="sv-gold"/><rect x="450" y="215" width="8" height="12" class="sv-gold"/><rect x="438" y="215" width="6" height="9" class="sv-gold"/></g></g><g class="hv-scene" data-scene="4"><rect x="0" y="292" width="640" height="68" class="sv-ground"/><rect x="0" y="288" width="640" height="6" class="sv-gold"/><g class="" transform="translate(320 250)"><rect x="-70" y="-30" width="140" height="34" rx="12" class="sv-or"/><path d="M-38 -30 L-24 -56 Q-20 -62 -12 -62 L26 -62 Q34 -62 38 -56 L50 -30 Z" class="sv-or"/><path d="M-28 -32 L-18 -52 L-2 -52 L-2 -32 Z M6 -32 L6 -52 L26 -52 L38 -32 Z" class="sv-win"/><circle cx="-40" cy="6" r="14" class="sv-dk"/><circle cx="40" cy="6" r="14" class="sv-dk"/><circle cx="-40" cy="6" r="5" class="sv-gold"/><circle cx="40" cy="6" r="5" class="sv-gold"/></g><g class="hv-flash" style="animation-delay:0.0s"><rect x="131" y="186" width="38" height="28" rx="6" class="sv-panel"/><circle cx="150" cy="200" r="7" class="sv-or"/></g><g class="hv-flash" style="animation-delay:0.4s"><rect x="301" y="106" width="38" height="28" rx="6" class="sv-panel"/><circle cx="320" cy="120" r="7" class="sv-or"/></g><g class="hv-flash" style="animation-delay:0.8s"><rect x="471" y="186" width="38" height="28" rx="6" class="sv-panel"/><circle cx="490" cy="200" r="7" class="sv-or"/></g><g class="hv-flash" style="animation-delay:1.2s"><rect x="171" y="286" width="38" height="28" rx="6" class="sv-panel"/><circle cx="190" cy="300" r="7" class="sv-or"/></g><g class="hv-flash" style="animation-delay:1.6s"><rect x="431" y="286" width="38" height="28" rx="6" class="sv-panel"/><circle cx="450" cy="300" r="7" class="sv-or"/></g><g class="hv-flash" style="animation-delay:2.0s"><rect x="301" y="306" width="38" height="28" rx="6" class="sv-panel"/><circle cx="320" cy="320" r="7" class="sv-or"/></g><g transform="translate(560 90)"><path d="M-34 0 A34 34 0 0 1 34 0" class="sv-arc"/><path d="M0 0 L22 -22" class="sv-needle hv-needle"/><circle r="5" class="sv-dk"/></g></g><g class="hv-scene" data-scene="5"><circle cx="520" cy="110" r="46" class="sv-sun"/><rect x="0" y="292" width="640" height="68" class="sv-ground"/><rect x="0" y="288" width="640" height="6" class="sv-gold"/><rect x="0" y="316" width="640" height="4" class="sv-dash"/><g class="hv-drive" transform="translate(0 300)"><rect x="-70" y="-30" width="140" height="34" rx="12" class="sv-or"/><path d="M-38 -30 L-24 -56 Q-20 -62 -12 -62 L26 -62 Q34 -62 38 -56 L50 -30 Z" class="sv-or"/><path d="M-28 -32 L-18 -52 L-2 -52 L-2 -32 Z M6 -32 L6 -52 L26 -52 L38 -32 Z" class="sv-win"/><circle cx="-40" cy="6" r="14" class="sv-dk"/><circle cx="40" cy="6" r="14" class="sv-dk"/><circle cx="-40" cy="6" r="5" class="sv-gold"/><circle cx="40" cy="6" r="5" class="sv-gold"/></g></g></svg>
+            <div class="pbar"><button type="button" class="btn small" id="hvPlay"></button><div class="segs"><button type="button" class="seg" id="seg-0" aria-label="Step 1"></button><button type="button" class="seg" id="seg-1" aria-label="Step 2"></button><button type="button" class="seg" id="seg-2" aria-label="Step 3"></button><button type="button" class="seg" id="seg-3" aria-label="Step 4"></button><button type="button" class="seg" id="seg-4" aria-label="Step 5"></button><button type="button" class="seg" id="seg-5" aria-label="Step 6"></button></div></div>
+            <div class="caption"><b id="hvCapTitle"></b><p id="hvCapText"></p></div>
+          </div>
+          <ol class="hsteps"><li><button type="button" class="hstep" id="hs-0"><span class="n">1</span><span><b></b><span></span></span></button></li><li><button type="button" class="hstep" id="hs-1"><span class="n">2</span><span><b></b><span></span></span></button></li><li><button type="button" class="hstep" id="hs-2"><span class="n">3</span><span><b></b><span></span></span></button></li><li><button type="button" class="hstep" id="hs-3"><span class="n">4</span><span><b></b><span></span></span></button></li><li><button type="button" class="hstep" id="hs-4"><span class="n">5</span><span><b></b><span></span></span></button></li><li><button type="button" class="hstep" id="hs-5"><span class="n">6</span><span><b></b><span></span></span></button></li></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="deals" style="padding-bottom: 8px">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">Save on longer rentals</div>
+          <h2>Weekly &amp; monthly deals</h2>
+          <p>Rent for 7 or 30 days and pay less than the daily rate. Claim a deal and your booking fills in for you.</p>
+        </div>
+      </div>
+      <div class="deals-grid">
+        <div class="dealcol"><div class="ttl"><h3>Weekly deals</h3><span>7 days</span></div><div id="deals-weekly"></div></div>
+        <div class="dealcol"><div class="ttl"><h3>Monthly deals</h3><span>30 days</span></div><div id="deals-monthly"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fleet">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">The fleet</div>
+          <h2>Pick your ride</h2>
+          <p>Daily rates include the car and online booking. Choose one and your booking form fills in for you.</p>
+        </div>
+      </div>
+      <div class="fleet" id="fleetGrid"></div>
+
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">Reserve</div>
+          <h2>Book and pay online</h2>
+          <p>Fill in the details, pay by card, and you are set. No one needs to meet you.</p>
+        </div>
+      </div>
+
+      <div class="book-grid">
+        <div>
+          <form id="bookForm" novalidate autocomplete="on">
+            <fieldset>
+              <legend>Trip</legend>
+              <div class="grid">
+                <div class="field full"><label for="bCar">Car</label><select id="bCar"></select></div>
+                <div class="field"><label for="bStart">Pickup date</label><input id="bStart" type="date"></div>
+                <div class="field"><label for="bEnd">Return date</label><input id="bEnd" type="date"></div>
+                <div class="field"><label for="bTime">Pickup time</label><input id="bTime" type="time" value="09:00"></div>
+                <p class="hint" id="availHint" style="grid-column: 1 / -1; min-height: 1.4em"></p>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Pickup or delivery</legend>
+              <div class="choice">
+                <label><input type="radio" name="how" value="pickup" checked> <span>Pick up the car<small>Any time, day or night. Free.</small></span></label>
+                <label><input type="radio" name="how" value="delivery"> <span>Deliver to me<small>7:00 AM to 4:00 PM only. $15 fee.</small></span></label>
+              </div>
+              <div id="deliveryFields" hidden>
+                <div class="grid">
+                  <div class="field full"><label for="dStreet">Street address</label><input id="dStreet" autocomplete="address-line1"></div>
+                  <div class="field"><label for="dCity">City</label><input id="dCity" autocomplete="address-level2"></div>
+                  <div class="field"><label for="dZip">ZIP</label><input id="dZip" inputmode="numeric" maxlength="10" autocomplete="postal-code"></div>
+                </div>
+                <p class="hint" style="margin-top:10px">Delivery runs from 7:00 AM to 4:00 PM. Set the pickup time above inside that window.</p>
+              </div>
+              <p class="hint" id="pickupHint">Self pickup is open 24 hours. Your access details are sent after payment.</p>
+            </fieldset>
+
+            <fieldset>
+              <legend>Driver</legend>
+              <div class="grid">
+                <div class="field"><label for="pName">Full name</label><input id="pName" autocomplete="name"></div>
+                <div class="field"><label for="pEmail">Email</label><input id="pEmail" type="email" autocomplete="email"></div>
+                <div class="field"><label for="pPhone">Phone</label><input id="pPhone" type="tel" autocomplete="tel"></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Before you book</legend>
+              <div class="choice">
+                <label><input type="radio" name="use" value="personal" checked> <span>Personal use<small>Trips, travel and errands.</small></span></label>
+                <label><input type="radio" name="use" value="work"> <span>Rideshare or delivery work<small>Uber, Lyft, DoorDash and others. Apply first.</small></span></label>
+              </div>
+              <p class="note" id="workNote" hidden>Driving for Uber, Lyft, DoorDash or any delivery service needs approval first. <a href="#drivers">Apply in the Drivers section</a>. After you are approved, we set up your rental and payment.</p>
+              <label class="check" style="margin-top:14px"><input type="checkbox" id="noSmoke"> <span>I agree there will be no smoking in the car.</span></label>
+              <p class="hint" style="margin-top:10px">You need a valid driver's license. We verify your ID before you get access to the car. At pickup and return you complete a check-in with photos all around the car, the mileage and the gas level.</p>
+            </fieldset>
+
+            <fieldset>
+              <legend>Payment</legend>
+              <p>After you review your trip, you pay by card on Stripe's secure checkout page. Card details are never entered on this site.</p>
+              <p class="hint" style="margin-top:8px">Credit and debit cards accepted.</p>
+            </fieldset>
+
+            <div class="err" id="bookErr" role="alert"></div>
+            <button class="btn" type="submit" id="payBtn">Continue to payment</button>
+          </form>
+
+          <div class="confirm" id="confirm" hidden>
+            <div class="eyebrow">Last steps</div>
+            <h2 style="margin-top:8px">Verify and pay</h2>
+            <div class="ref" id="confRef"></div>
+            <p id="confText"></p>
+            <div class="idstep" id="idStep">
+              <b>1. Verify your ID</b>
+              <p id="idText"></p>
+              <a class="btn small" id="idLink" href="#book" target="_blank" rel="noopener" hidden>Verify my ID</a>
+              <label class="check" id="idDoneWrap" hidden><input type="checkbox" id="idDone"> <span>I finished ID verification.</span></label>
+            </div>
+            <p style="margin-top:14px"><b>2. Pay. Amount due: <span id="confAmt"></span></b></p>
+            <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+              <a class="btn" id="payLink" href="#book" target="_blank" rel="noopener" hidden>Pay with Stripe</a>
+              <button class="btn ghost" type="button" id="again">Change booking</button>
+            </div>
+            <p class="note" id="payNote"></p>
+            <p class="hint" style="margin-top:10px">Before you drive off, complete the <a href="#checkin">Trip check-in</a> with photos, mileage and gas level. Do it again when you return.</p>
+          </div>
+        </div>
+
+        <aside class="summary" aria-live="polite">
+          <div class="eyebrow">Your trip</div>
+          <h3 id="sCar" style="margin-top:6px">Choose a car</h3>
+          <dl>
+            <dt id="sRateLbl">Daily rate</dt><dd id="sRate">&ndash;</dd>
+            <dt>Days</dt><dd id="sDays">&ndash;</dd>
+            <dt>Delivery</dt><dd id="sDel">$0</dd>
+            <dt class="total">Total</dt><dd class="total v" id="sTotal">$0</dd>
+          </dl>
+          <p class="hint" style="margin-top:14px">Estimate before any taxes or local fees.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="drivers" style="background: var(--coal); border-block: 2px solid var(--gold)">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">For drivers</div>
+          <h2>Uber, Lyft, DoorDash &amp; delivery drivers</h2>
+          <p>Need a car for rideshare or delivery work? Apply first. We review every application, and you can rent once you are approved.</p>
+        </div>
+      </div>
+      <div class="book-grid">
+        <div>
+          <form id="applyForm" novalidate>
+            <fieldset>
+              <legend>Driver application</legend>
+              <div class="grid">
+                <div class="field"><label for="apName">Full name</label><input id="apName" autocomplete="name"></div>
+                <div class="field"><label for="apEmail">Email</label><input id="apEmail" type="email" autocomplete="email"></div>
+                <div class="field"><label for="apPhone">Phone</label><input id="apPhone" type="tel" autocomplete="tel"></div>
+                <div class="field"><label for="apState">State on driver's license</label><input id="apState" maxlength="30"></div>
+                <div class="field full">
+                  <span class="lbl">Which services do you drive for?</span>
+                  <div class="platforms">
+                    <label class="check"><input type="checkbox" id="apUber"> <span>Uber</span></label>
+                    <label class="check"><input type="checkbox" id="apLyft"> <span>Lyft</span></label>
+                    <label class="check"><input type="checkbox" id="apDoorDash"> <span>DoorDash</span></label>
+                  </div>
+                </div>
+                <div class="field full"><label for="apOther">Other delivery service (optional)</label><input id="apOther" placeholder="e.g. Instacart, Grubhub, Amazon Flex" maxlength="80"></div>
+                <div class="field"><label for="apStatus">Are you already approved on the service?</label>
+                  <select id="apStatus"><option>Yes, I am approved</option><option>My application is pending</option><option>Not yet applied</option></select></div>
+                <div class="field"><label for="apTerm">How long do you need a car?</label>
+                  <select id="apTerm"><option>One week</option><option>One month</option><option>Longer, ongoing</option></select></div>
+                <div class="field"><label for="apStart">Date you need it (optional)</label><input id="apStart" type="date"></div>
+                <div class="field full"><label for="apNote">Anything else we should know (optional)</label><textarea id="apNote" rows="3" maxlength="400"></textarea></div>
+              </div>
+              <label class="check" style="margin-top:16px"><input type="checkbox" id="apAgree"> <span>I understand I must be approved before I can rent, and that smoking is not allowed in the car.</span></label>
+              <p class="note">Do not put your license number or any card details here. We ask for documents separately after you apply.</p>
+            </fieldset>
+            <div class="err" id="apErr" role="alert"></div>
+            <button class="btn" type="submit">Review my application</button>
+          </form>
+
+          <div class="confirm" id="apResult" hidden>
+            <div class="eyebrow">One more step</div>
+            <h2 style="margin-top:8px">Send your application</h2>
+            <p>Your application has not been sent yet. <span id="apTo"></span></p>
+            <textarea id="apText" rows="11" readonly style="margin-top:14px; font-family: var(--mono); font-size: 0.85rem"></textarea>
+            <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+              <a class="btn" id="apMail" href="#drivers" hidden>Email application</a>
+              <button class="btn ghost" type="button" id="apCopy">Copy application</button>
+              <button class="btn ghost" type="button" id="apAgain">Edit</button>
+            </div>
+            <p class="hint" id="apCopied" style="margin-top:10px"></p>
+          </div>
+        </div>
+
+        <div style="min-width:0">
+          <ol class="steps" aria-label="How driver approval works">
+            <li><span class="n">1</span><div><b>Apply</b><span>Fill in the form. It takes a couple of minutes.</span></div></li>
+            <li><span class="n">2</span><div><b>Get approved</b><span>We review every application and contact you.</span></div></li>
+            <li><span class="n">3</span><div><b>Rent</b><span>After approval we set up your rental and payment.</span></div></li>
+            <li><span class="n">4</span><div><b>Drive</b><span>Pick up the car any hour. We are open 24 hours.</span></div></li>
+          </ol>
+          <div class="card" style="margin-top:20px">
+            <h3>After you apply</h3>
+            <p>We may ask for your driver's license, proof that you are active on the service you drive for, and proof of insurance where required. No smoking in any car.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section id="checkin">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">Required at pickup and return</div>
+          <h2>Trip check-in</h2>
+          <p>Before you drive off and when you return, take photos all around the car and record the mileage and gas level. Every field is required.</p>
+        </div>
+      </div>
+      <form id="odoForm" novalidate>
+        <div class="grid">
+          <div class="field"><label for="odRef">Booking reference</label><input id="odRef" placeholder="LLR-AB12CD" maxlength="12" autocomplete="off"></div>
+          <div class="field"><label for="odCar">Car</label><select id="odCar"></select></div>
+          <div class="field"><label for="odWhen">Check-in type</label><select id="odWhen"><option value="pickup">At pickup</option><option value="return">At return</option></select></div>
+          <div class="field"><label for="odMiles">Odometer reading (miles)</label><input id="odMiles" type="number" min="0" step="1" inputmode="numeric"></div>
+          <div class="field"><label for="odFuel">Gas level</label><select id="odFuel"><option value="">Choose level</option><option>Empty</option><option>1/4</option><option>1/2</option><option>3/4</option><option>Full</option></select></div>
+        </div>
+        <div class="lbl" style="margin:20px 0 10px">Photos all around the car (6 required)</div>
+        <div class="photos">
+          <div class="shot"><label for="ph-front">Front</label><div class="prev" id="pv-front">No photo</div><input id="ph-front" type="file" accept="image/*" capture="environment"></div>
+          <div class="shot"><label for="ph-back">Back</label><div class="prev" id="pv-back">No photo</div><input id="ph-back" type="file" accept="image/*" capture="environment"></div>
+          <div class="shot"><label for="ph-left">Driver side</label><div class="prev" id="pv-left">No photo</div><input id="ph-left" type="file" accept="image/*" capture="environment"></div>
+          <div class="shot"><label for="ph-right">Passenger side</label><div class="prev" id="pv-right">No photo</div><input id="ph-right" type="file" accept="image/*" capture="environment"></div>
+          <div class="shot"><label for="ph-interior">Interior</label><div class="prev" id="pv-interior">No photo</div><input id="ph-interior" type="file" accept="image/*" capture="environment"></div>
+          <div class="shot"><label for="ph-dash">Dashboard (mileage and gas)</label><div class="prev" id="pv-dash">No photo</div><input id="ph-dash" type="file" accept="image/*" capture="environment"></div>
+        </div>
+        <div class="err" id="odErr" role="alert" style="margin-top:14px"></div>
+        <button class="btn" type="submit">Submit check-in</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="delivery">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">We can bring it to you</div>
+          <h2>Delivery service</h2>
+        </div>
+      </div>
+      <div class="delivery-grid">
+        <div class="card"><h3>Delivery hours</h3><div class="clock">7:00 AM <em>to</em> 4:00 PM</div><p style="margin-top:12px">Choose delivery when you book and set your time inside this window.</p></div>
+        <div class="card"><h3>Pickup hours</h3><div class="clock"><em>24</em> hours</div><p style="margin-top:12px">Skip delivery and collect the car yourself at any hour, every day.</p></div>
+        <div class="card"><h3>No contact needed</h3><p>You book, pay and get your access details online. Nobody has to hand you keys or paperwork.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="alertBar" role="status" hidden>
+  <span id="alertText"></span>
+  <span style="display:flex; gap:10px; flex-wrap:wrap"><button class="btn small" type="button" id="alertShow">Show</button><button class="btn ghost small" type="button" id="alertClose">Dismiss</button></span>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>LOGAN LOOP RENTALS</span>
+    <span>OPEN 24 HOURS &middot; DELIVERY 7 AM&ndash;4 PM</span>
+  </div>
+  <div class="wrap"><button type="button" id="ownerLogin" class="ownerlink">Login</button></div>
+</footer>
+
+<div id="loginBox" hidden>
+  <form id="loginForm" novalidate>
+    <h3>Owner login</h3>
+    <div class="field"><label for="loginPass">Passcode</label><input id="loginPass" type="password" inputmode="numeric" autocomplete="current-password"></div>
+    <div class="err" id="loginErr" role="alert" style="margin:0"></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap"><button class="btn small" type="submit">Log in</button><button class="btn ghost small" type="button" id="loginCancel">Cancel</button></div>
+  </form>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  // Site settings. Put your Stripe Payment Link, your ID verification link and the email that should receive driver applications between the quotes, then upload the file again.
+  var SITE = { stripeLink: "", idLink: "", applyEmail: "" };
+  var SAMPLES = [
+    { id: "s1", name: "Compact Sedan", type: "car", seats: 5, trans: "Automatic", fuel: "Gas", rate: 49, sample: true },
+    { id: "s2", name: "Midsize SUV", type: "suv", seats: 5, trans: "Automatic", fuel: "Hybrid", rate: 72, sample: true },
+    { id: "s3", name: "Family Van", type: "suv", seats: 7, trans: "Automatic", fuel: "Gas", rate: 89, sample: true },
+    { id: "s4", name: "Pickup Truck", type: "truck", seats: 5, trans: "Automatic", fuel: "Gas", rate: 95, sample: true }
+  ];
+  var KEY = "llr-listings", HKEY = "llr-hide-samples";
+  var custom = [], hideSamples = false;
+  try { custom = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { custom = []; }
+  try { hideSamples = localStorage.getItem(HKEY) === "1"; } catch (e) {}
+  var SAMPLE_DEALS = [
+    { id: "sd1", term: "weekly", carId: "s1", title: "Weekly special", detail: "Seven days in the compact sedan.", price: 299, sample: true },
+    { id: "sd2", term: "weekly", carId: "s4", title: "Truck week", detail: "Seven days, good for moving or work.", price: 599, sample: true },
+    { id: "sd3", term: "monthly", carId: "s2", title: "Monthly special", detail: "Thirty days in the midsize SUV.", price: 1890, sample: true },
+    { id: "sd4", term: "monthly", carId: "s1", title: "Commuter month", detail: "Thirty days in the compact sedan.", price: 1190, sample: true }
+  ];
+  var DKEY = "llr-deals", customDeals = [], activeDeal = null;
+  try { customDeals = JSON.parse(localStorage.getItem(DKEY) || "[]") || []; } catch (e) { customDeals = []; }
+  function dealDays(t) { return t === "monthly" ? 30 : 7; }
+
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(custom)); localStorage.setItem(DKEY, JSON.stringify(customDeals));localStorage.setItem(HKEY, hideSamples ? "1" : "0"); return true; }
+    catch (e) { return false; }
+  }
+  function cars() { return custom.concat(hideSamples ? [] : SAMPLES); }
+  function money(n) { return "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); }
+  function dealList() {
+    return customDeals.concat(hideSamples ? [] : SAMPLE_DEALS).filter(function (x) { return byId(x.carId); });
+  }
+
+  var PATHS = {
+    car: "M20 70 L20 56 Q20 50 28 48 L62 44 L82 24 Q86 20 92 20 L150 20 Q156 20 160 24 L182 44 L212 48 Q220 50 220 58 L220 70 Z",
+    suv: "M20 70 L20 50 Q20 44 28 42 L56 40 L70 20 Q72 16 78 16 L190 16 Q198 16 200 22 L212 46 Q220 48 220 56 L220 70 Z",
+    truck: "M14 70 L14 52 Q14 46 22 46 L70 44 L88 22 Q91 18 96 18 L128 18 Q134 18 134 24 L134 44 L220 44 Q226 44 226 50 L226 70 Z"
+  };
+  function carSvg(type) {
+    var p = PATHS[type] || PATHS.car;
+    return '<svg viewBox="0 0 240 100" role="img" aria-label="Car illustration"><path d="' + p + '" fill="#66702f" stroke="#b8921a" stroke-width="3" stroke-linejoin="round"/>' +
+      '<circle cx="64" cy="72" r="13" fill="#0b0c08" stroke="#ff7a1a" stroke-width="4"/><circle cx="180" cy="72" r="13" fill="#0b0c08" stroke="#ff7a1a" stroke-width="4"/></svg>';
+  }
+
+  function renderFleet() {
+    var grid = $("fleetGrid"); grid.innerHTML = "";
+    var list = cars();
+    if (!list.length) {
+      var empty = document.createElement("p");
+      empty.className = "hint";
+      empty.textContent = "No cars listed yet. Open the owner panel below and add your first listing.";
+      grid.appendChild(empty);
+    }
+    list.forEach(function (c) {
+      var card = document.createElement("article"); card.className = "car";
+      var pic = document.createElement("div"); pic.className = "pic";
+      if (c.img) { var im = document.createElement("img"); im.src = c.img; im.alt = c.name; pic.appendChild(im); }
+      else pic.innerHTML = carSvg(c.type);
+      if (c.sample) { var b = document.createElement("span"); b.className = "badge"; b.textContent = "Sample listing"; pic.appendChild(b); }
+      card.appendChild(pic);
+      var body = document.createElement("div"); body.className = "body";
+      var h = document.createElement("h3"); h.textContent = c.name; body.appendChild(h);
+      var sp = document.createElement("div"); sp.className = "specs";
+      [c.seats + " seats", c.trans, c.fuel].forEach(function (t) { var s = document.createElement("span"); s.textContent = t; sp.appendChild(s); });
+      body.appendChild(sp);
+      var av = availInfo(c.id), ch = document.createElement("div"); ch.className = "avail " + av.cls; ch.textContent = av.t; body.appendChild(ch);
+      var foot = document.createElement("div"); foot.className = "foot";
+      var pr = document.createElement("div"); pr.className = "price"; pr.innerHTML = money(c.rate) + " <small>/ DAY</small>";
+      var right = document.createElement("div"); right.style.display = "flex"; right.style.flexDirection = "column"; right.style.gap = "8px"; right.style.alignItems = "flex-end";
+      var bk = document.createElement("a"); bk.className = "btn small"; bk.href = "#book"; bk.textContent = "Book this car";
+      bk.addEventListener("click", function () { $("bCar").value = c.id; update(); });
+      right.appendChild(bk);
+      if (!c.sample) {
+        var rm = document.createElement("button"); rm.type = "button"; rm.className = "rm"; rm.textContent = "Remove listing";
+        rm.addEventListener("click", function () { custom = custom.filter(function (x) { return x.id !== c.id; }); persist(); refresh(); });
+        right.appendChild(rm);
+      }
+      foot.appendChild(pr); foot.appendChild(right); body.appendChild(foot); card.appendChild(body);
+      grid.appendChild(card);
+    });
+    $("hideSamples").hidden = !(custom.length && !hideSamples);
+  }
+
+  function renderSelect() {
+    var sel = $("bCar"), prev = sel.value; sel.innerHTML = "";
+    cars().forEach(function (c) {
+      var o = document.createElement("option"); o.value = c.id; o.textContent = c.name + " (" + money(c.rate) + "/day)"; sel.appendChild(o);
+    });
+    if (prev && cars().some(function (c) { return c.id === prev; })) sel.value = prev;
+  }
+  function renderDealCars() {
+    var sel = $("xCar"), prev = sel.value; sel.innerHTML = "";
+    cars().forEach(function (c) { var o = document.createElement("option"); o.value = c.id; o.textContent = c.name; sel.appendChild(o); });
+    if (prev && byId(prev)) sel.value = prev;
+  }
+  function renderDeals() {
+    ["weekly", "monthly"].forEach(function (term) {
+      var box = $("deals-" + term); box.innerHTML = "";
+      var list = dealList().filter(function (x) { return x.term === term; });
+      if (!list.length) {
+        var p = document.createElement("p"); p.className = "hint"; p.style.padding = "8px 0 18px";
+        p.textContent = "No " + term + " deals right now. Add one from the owner panel below the cars.";
+        box.appendChild(p);
+      }
+      list.forEach(function (x) {
+        var c = byId(x.carId), days = dealDays(x.term), regular = c.rate * days, saved = regular - x.price;
+        var row = document.createElement("div"); row.className = "deal";
+        var left = document.createElement("div"); left.style.minWidth = "0";
+        var t = document.createElement("div"); t.className = "t"; t.textContent = x.title + " · " + c.name;
+        left.appendChild(t);
+        if (x.detail) { var d = document.createElement("div"); d.className = "d"; d.textContent = x.detail; left.appendChild(d); }
+        var pr = document.createElement("div"); pr.className = "p";
+        var pp = document.createElement("div"); pp.className = "price"; pp.innerHTML = money(x.price) + " <small>/ " + (term === "weekly" ? "WEEK" : "MONTH") + "</small>";
+        pr.appendChild(pp);
+        if (saved > 0) { var s = document.createElement("div"); s.className = "save"; s.textContent = "Save " + money(saved); pr.appendChild(s); }
+        var acts = document.createElement("div"); acts.className = "acts";
+        var bk = document.createElement("a"); bk.className = "btn small"; bk.href = "#book"; bk.textContent = "Claim this deal";
+        bk.addEventListener("click", function () {
+          if (!$("bStart").value) setDefaults();
+          $("bCar").value = x.carId;
+          var e = new Date($("bStart").value + "T00:00:00"); e.setDate(e.getDate() + days);
+          $("bEnd").value = iso(e); activeDeal = x.id; update();
+        });
+        acts.appendChild(bk);
+        if (x.sample) { var b = document.createElement("span"); b.className = "badge"; b.textContent = "Sample deal"; acts.appendChild(b); }
+        else {
+          var rm = document.createElement("button"); rm.type = "button"; rm.className = "rm"; rm.textContent = "Remove deal";
+          rm.addEventListener("click", function () { customDeals = customDeals.filter(function (z) { return z.id !== x.id; }); if (activeDeal === x.id) activeDeal = null; persist(); refresh(); });
+          acts.appendChild(rm);
+        }
+        row.appendChild(left); row.appendChild(pr); row.appendChild(acts); box.appendChild(row);
+      });
+    });
+  }
+  function currentDeal(c, d) {
+    if (!activeDeal || !c) return null;
+    var x = dealList().filter(function (z) { return z.id === activeDeal; })[0];
+    return x && x.carId === c.id && dealDays(x.term) === d ? x : null;
+  }
+  function refresh() { renderFleet(); renderSelect(); renderDealCars(); renderDeals(); renderAvailCars(); renderMx(); renderBlocks(); renderTrips(); renderCheckins(); update(); }
+
+  function byId(id) { return cars().filter(function (c) { return c.id === id; })[0]; }
+  function isDelivery() { return document.querySelector('input[name="how"]:checked').value === "delivery"; }
+  function dayCount() {
+    var s = $("bStart").value, e = $("bEnd").value;
+    if (!s || !e) return 0;
+    var d = Math.round((new Date(e + "T00:00:00") - new Date(s + "T00:00:00")) / 86400000);
+    return d < 1 ? 0 : d;
+  }
+  function update() {
+    var c = byId($("bCar").value), d = dayCount(), del = isDelivery();
+    $("deliveryFields").hidden = !del;
+    $("pickupHint").hidden = del;
+    $("sCar").textContent = c ? c.name : "Choose a car";
+    var deal = currentDeal(c, d);
+    $("sRateLbl").textContent = deal ? deal.title : "Daily rate";
+    $("sRate").textContent = deal ? money(deal.price) : (c ? money(c.rate) : "–");
+    $("sDays").textContent = d ? String(d) : "–";
+    $("sDel").textContent = del ? "$15" : "$0";
+    var base = deal ? deal.price : (c && d ? c.rate * d : 0);
+    $("sTotal").textContent = money(base + (del ? 15 : 0));
+    showAvail(c);
+  }
+
+  function iso(dt) { return dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0"); }
+  function setDefaults() {
+    var a = new Date(); a.setDate(a.getDate() + 1);
+    var b = new Date(a); b.setDate(b.getDate() + 3);
+    $("bStart").min = iso(new Date()); $("bStart").value = iso(a);
+    $("bEnd").min = iso(a); $("bEnd").value = iso(b);
+  }
+  $("bStart").addEventListener("change", function () {
+    $("bEnd").min = $("bStart").value || iso(new Date());
+    if ($("bEnd").value && $("bEnd").value <= $("bStart").value) {
+      var n = new Date($("bStart").value + "T00:00:00"); n.setDate(n.getDate() + 1); $("bEnd").value = iso(n);
+    }
+    update();
+  });
+  ["bEnd", "bCar"].forEach(function (id) { $(id).addEventListener("change", update); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="how"]'), function (r) { r.addEventListener("change", update); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="use"]'), function (r) {
+    r.addEventListener("change", function () { $("workNote").hidden = document.querySelector('input[name="use"]:checked').value !== "work"; });
+  });
+
+  // Stripe payment links
+  var defaultLink = SITE.stripeLink || "";
+  try { var savedLink = localStorage.getItem("llr-stripe"); if (savedLink) defaultLink = savedLink; } catch (e) {}
+  $("sLink").value = defaultLink;
+  function stripeUrl(v) {
+    try {
+      var u = new URL(String(v).trim());
+      if (u.protocol !== "https:") return null;
+      if (u.hostname !== "buy.stripe.com" && u.hostname !== "checkout.stripe.com") return null;
+      return u.toString();
+    } catch (e) { return null; }
+  }
+  function payLinkFor(c, deal) {
+    return (deal && deal.link) || (c && c.link) || defaultLink || "";
+  }
+  $("stripeForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var v = $("sLink").value.trim(), er = $("stripeErr");
+    if (!v) { er.textContent = "Paste your Stripe payment link first."; $("sLink").focus(); return; }
+    var u = stripeUrl(v);
+    if (!u) { er.textContent = "That is not a Stripe payment link. It should start with https://buy.stripe.com/"; $("sLink").focus(); return; }
+    defaultLink = u; $("sLink").value = u;
+    var ok = true;
+    try { localStorage.setItem("llr-stripe", u); } catch (e) { ok = false; }
+    er.style.color = "var(--olive-lite)";
+    er.textContent = ok ? "Saved in this browser. Customers get it once it is built into the site file." : "Link is active on this page only. This browser could not save it.";
+  });
+  $("sLink").addEventListener("input", function () { $("stripeErr").textContent = ""; $("stripeErr").style.color = ""; });
+  $("stripeClear").addEventListener("click", function () {
+    defaultLink = SITE.stripeLink || "";
+    try { localStorage.removeItem("llr-stripe"); } catch (e) {}
+    $("sLink").value = defaultLink; $("stripeErr").textContent = "";
+  });
+
+  function fmtTime(t) {
+    var p = t.split(":"), h = parseInt(p[0], 10), m = p[1], ap = h >= 12 ? "PM" : "AM";
+    return ((h % 12) || 12) + ":" + m + " " + ap;
+  }
+  function fmtDate(s) { return new Date(s + "T00:00:00").toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" }); }
+
+  $("bookForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var err = $("bookErr"), c = byId($("bCar").value), d = dayCount(), del = isDelivery();
+    function fail(msg, id) { err.textContent = msg; if (id) $(id).focus(); }
+    if (!c) return fail("Choose a car to rent.", "bCar");
+    if (!$("bStart").value || !$("bEnd").value) return fail("Choose your pickup and return dates.", "bStart");
+    if (!d) return fail("The return date must be after the pickup date.", "bEnd");
+    if (!$("bTime").value) return fail("Choose a pickup time.", "bTime");
+    if (del) {
+      var t = $("bTime").value;
+      if (t < "07:00" || t > "16:00") return fail("Delivery is available from 7:00 AM to 4:00 PM. Pick a time in that window or choose pickup instead.", "bTime");
+      if (!$("dStreet").value.trim() || !$("dCity").value.trim() || !$("dZip").value.trim()) return fail("Enter the full delivery address.", "dStreet");
+    }
+    if (document.querySelector('input[name="use"]:checked').value === "work") return fail("Rideshare and delivery driving needs approval first. Apply in the Drivers section.", "bookErr");
+    if (!$("noSmoke").checked) return fail("Please agree to the no smoking rule.", "noSmoke");
+    var hit = blockFor(c.id, $("bStart").value, $("bEnd").value);
+    if (hit) return fail(c.name + " is booked from " + fmtShort(hit.start) + " to " + fmtShort(hit.end) + ". Choose other dates or another car.", "bStart");
+    if (isDue(c.id)) return fail(c.name + " is in for its scheduled service. Choose another car.", "bCar");
+    if (!$("pName").value.trim()) return fail("Enter the driver's full name.", "pName");
+    if (!/^\S+@\S+\.\S+$/.test($("pEmail").value)) return fail("Enter a valid email address.", "pEmail");
+    if ($("pPhone").value.replace(/\D/g, "").length < 10) return fail("Enter a phone number with area code.", "pPhone");
+    err.textContent = "";
+
+    var dl = currentDeal(c, d);
+    var total = (dl ? dl.price : c.rate * d) + (del ? 15 : 0);
+    var ref = "LLR-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+    $("confRef").textContent = ref;
+    $("confText").textContent = c.name + ", " + fmtDate($("bStart").value) + " to " + fmtDate($("bEnd").value) + ". " +
+      (del ? "Delivery at " + fmtTime($("bTime").value) + " to " + $("dStreet").value.trim() + ", " + $("dCity").value.trim() + "." : "Self pickup at " + fmtTime($("bTime").value) + ".");
+    $("confAmt").textContent = money(total);
+    var base = stripeUrl(payLinkFor(c, dl)), pl = $("payLink"), note = $("payNote");
+    if (base) {
+      var u = new URL(base);
+      u.searchParams.set("client_reference_id", ref);
+      u.searchParams.set("prefilled_email", $("pEmail").value.trim());
+      pl.href = u.toString(); pl.hidden = false;
+      note.textContent = "Stripe opens in a new tab. If it asks you to enter an amount, enter " + money(total) + ". Your booking is confirmed once the payment goes through. Keep your reference " + ref + ".";
+    } else {
+      pl.hidden = true;
+      note.textContent = "Online payment is not switched on yet. Please check back soon.";
+    }
+    var idu = idUrl(SITE.idLink), il = $("idLink");
+    if (idu) {
+      il.href = idu; il.hidden = false; $("idDoneWrap").hidden = false;
+      $("idText").textContent = "Have your driver's license ready. Use the same email you gave us, and quote " + ref + " if asked.";
+    } else {
+      il.hidden = true; $("idDoneWrap").hidden = true;
+      $("idText").textContent = "We will email you a link to verify your ID before you get access to the car.";
+    }
+    $("idDone").checked = false; setPayGate();
+    pendingRef = ref;
+    addBlock({ carId: c.id, start: $("bStart").value, end: $("bEnd").value, time: $("bTime").value, how: del ? "delivery" : "pickup", source: "website", ref: ref, name: $("pName").value.trim(), turoDone: false });
+    $("bookForm").hidden = true; $("confirm").hidden = false;
+    $("confirm").scrollIntoView({ block: "center" });
+  });
+  $("again").addEventListener("click", function () {
+    if (pendingRef) { removeByRef(pendingRef); pendingRef = null; }
+    $("confirm").hidden = true; $("bookForm").hidden = false; $("bookForm").scrollIntoView({ block: "start" });
+  });
+
+  $("dealForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var price = parseFloat($("xPrice").value), title = $("xTitle").value.trim(), carId = $("xCar").value;
+    if (!carId) { $("dealErr").textContent = "Add a car listing first, then attach a deal to it."; return; }
+    if (!(price > 0)) { $("dealErr").textContent = "Enter a flat price above $0."; $("xPrice").focus(); return; }
+    if (!title) { $("dealErr").textContent = "Enter a name for the deal."; $("xTitle").focus(); return; }
+    var xLink = $("xLink").value.trim();
+    if (xLink && !stripeUrl(xLink)) { $("dealErr").textContent = "The Stripe link should start with https://buy.stripe.com/"; $("xLink").focus(); return; }
+    $("dealErr").textContent = "";
+    customDeals.unshift({ id: "d" + Date.now(), term: $("xTerm").value, carId: carId, title: title, detail: $("xDetail").value.trim(), price: price, link: xLink ? stripeUrl(xLink) : "" });
+    var ok = persist();
+    $("xPrice").value = ""; $("xTitle").value = ""; $("xDetail").value = "";
+    if (!ok) $("dealErr").textContent = "Deal added, but this browser could not save it. It will be gone after you leave the page.";
+    refresh();
+  });
+
+  // availability calendar
+  var BKEY = "llr-blocks", AKEY = "llr-alerts", blocks = [], alertsOn = false, pendingRef = null, dismissed = false;
+  try { blocks = JSON.parse(localStorage.getItem(BKEY) || "[]") || []; } catch (e) { blocks = []; }
+  try { alertsOn = localStorage.getItem(AKEY) === "1"; } catch (e) {}
+  function saveBlocks() { try { localStorage.setItem(BKEY, JSON.stringify(blocks)); return true; } catch (e) { return false; } }
+  function newId() { return "b" + Date.now() + Math.random().toString(36).slice(2, 6); }
+  function addDay(s, n) { var d = new Date(s + "T00:00:00"); d.setDate(d.getDate() + n); return iso(d); }
+  function fmtShort(s) { return new Date(s + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" }); }
+  function carName(id) { var c = byId(id); return c ? c.name : "Removed car"; }
+  function byStart(a, b) { return a.start < b.start ? -1 : a.start > b.start ? 1 : 0; }
+  function blockFor(carId, s, e) {
+    return blocks.filter(function (b) { return b.carId === carId && s <= b.end && e >= b.start; })[0] || null;
+  }
+  function availInfo(carId) {
+    if (isDue(carId)) return { t: "In for service", cls: "busy" };
+    var today = iso(new Date());
+    var list = blocks.filter(function (b) { return b.carId === carId && b.end >= today; }).sort(byStart);
+    if (!list.length) return { t: "Available", cls: "ok" };
+    var f = list[0];
+    if (f.start <= today) {
+      var end = f.end;
+      list.forEach(function (b) { if (b.start <= addDay(end, 1) && b.end > end) end = b.end; });
+      return { t: "Booked through " + fmtShort(end), cls: "busy" };
+    }
+    return { t: "Available now. Next booked " + fmtShort(f.start), cls: "ok" };
+  }
+  function showAvail(c) {
+    var hint = $("availHint"), s = $("bStart").value, e = $("bEnd").value;
+    if (c && isDue(c.id)) { hint.textContent = c.name + " is in for its scheduled service. Choose another car."; hint.style.color = "var(--danger)"; return; }
+    if (c && s && e) {
+      var b = blockFor(c.id, s, e);
+      hint.textContent = b ? c.name + " is booked from " + fmtShort(b.start) + " to " + fmtShort(b.end) + ". Choose other dates or another car." : "Available for these dates.";
+      hint.style.color = b ? "var(--danger)" : "var(--olive-lite)";
+    } else { hint.textContent = ""; }
+  }
+  function renderAvailCars() {
+    ["bkCar", "imCar"].forEach(function (id) {
+      var sel = $(id), prev = sel.value; sel.innerHTML = "";
+      cars().forEach(function (c) { var o = document.createElement("option"); o.value = c.id; o.textContent = c.name; sel.appendChild(o); });
+      if (prev && byId(prev)) sel.value = prev;
+    });
+  }
+  function pendingTuro() { return blocks.filter(function (b) { return b.source === "website" && !b.turoDone; }); }
+  function alertMsg(p) {
+    var b = p[0];
+    return "Block on Turo: " + carName(b.carId) + ", " + fmtShort(b.start) + " to " + fmtShort(b.end) + (p.length > 1 ? " (+" + (p.length - 1) + " more)" : "");
+  }
+  function syncBanner() {
+    var p = alertsOn ? pendingTuro() : [], sd = serviceDue(), bar = $("alertBar"), parts = [];
+    if (tripMsg && isOwner()) parts.push(tripMsg);
+    if (sd.length) parts.push(serviceMsg(sd));
+    if (p.length) parts.push(alertMsg(p));
+    if (!parts.length || dismissed) { bar.hidden = true; return; }
+    $("alertText").textContent = parts.join("  \u00b7  "); bar.hidden = false;
+  }
+  function beep() {
+    try {
+      var C = window.AudioContext || window.webkitAudioContext; if (!C) return;
+      var a = new C(), o = a.createOscillator(), g = a.createGain();
+      o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = 0.05; o.start();
+      setTimeout(function () { try { o.stop(); a.close(); } catch (e) {} }, 250);
+    } catch (e) {}
+  }
+  function notify(msg) {
+    try { if (window.Notification && Notification.permission === "granted") new Notification("Logan Loop Rentals", { body: msg }); } catch (e) {}
+  }
+  function fireAlert() {
+    var p = pendingTuro(), sd = serviceDue();
+    if (!isOwner() || !alertsOn || (!p.length && !sd.length)) { syncBanner(); return; }
+    dismissed = false; syncBanner(); beep(); notify(sd.length ? serviceMsg(sd) : alertMsg(p));
+  }
+  setInterval(fireAlert, 4 * 60 * 1000);
+  function updateAlertUi() {
+    renderSummary();
+    $("alertBtn").textContent = alertsOn ? "Turn off alerts" : "Turn on alerts";
+    $("alertStatus").textContent = alertsOn ? "Alerts are on. While this page is open, you get an alert every 4 minutes for cars due for service and for website bookings not yet ticked as blocked on Turo." : "Alerts are off.";
+    syncBanner();
+  }
+  function addBlock(o) {
+    o.id = newId(); blocks.push(o); saveBlocks(); dismissed = false; refresh();
+  }
+  function removeBlock(id) { blocks = blocks.filter(function (b) { return b.id !== id; }); saveBlocks(); refresh(); }
+  function removeByRef(ref) { blocks = blocks.filter(function (b) { return b.ref !== ref; }); saveBlocks(); refresh(); }
+  function row(textMain, textSub, acts) {
+    var r = document.createElement("div"); r.className = "blk";
+    var w = document.createElement("div"); w.className = "what";
+    var m = document.createElement("div"); m.textContent = textMain; w.appendChild(m);
+    if (textSub) { var s = document.createElement("small"); s.textContent = textSub; w.appendChild(s); }
+    var a = document.createElement("div"); a.className = "acts";
+    acts.forEach(function (x) { a.appendChild(x); });
+    r.appendChild(w); r.appendChild(a); return r;
+  }
+  function rmBtn(id) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "rm"; b.textContent = "Remove";
+    b.addEventListener("click", function () { removeBlock(id); }); return b;
+  }
+  function renderBlocks() {
+    var box = $("blockList"); box.innerHTML = "";
+    var plain = blocks.filter(function (b) { return b.source !== "website"; }).sort(byStart);
+    if (!plain.length) { var p = document.createElement("p"); p.className = "hint"; p.textContent = "No blocked days yet."; box.appendChild(p); }
+    plain.forEach(function (b) {
+      box.appendChild(row(carName(b.carId) + ": " + fmtShort(b.start) + " to " + fmtShort(b.end), b.source === "turo" ? "From Turo calendar file" : "Blocked by hand", [rmBtn(b.id)]));
+    });
+    var tb = $("turoList"); tb.innerHTML = "";
+    var web = blocks.filter(function (b) { return b.source === "website"; }).sort(byStart);
+    if (!web.length) { var q = document.createElement("p"); q.className = "hint"; q.textContent = "No website bookings yet."; tb.appendChild(q); }
+    web.forEach(function (b) {
+      var lab = document.createElement("label"); lab.className = "check";
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!b.turoDone;
+      cb.addEventListener("change", function () { b.turoDone = cb.checked; saveBlocks(); updateAlertUi(); });
+      var sp = document.createElement("span"); sp.textContent = "Blocked on Turo";
+      lab.appendChild(cb); lab.appendChild(sp);
+      tb.appendChild(row(carName(b.carId) + ": " + fmtShort(b.start) + " to " + fmtShort(b.end), (b.name ? b.name + " · " : "") + b.ref + " · Awaiting payment or paid", [lab, rmBtn(b.id)]));
+    });
+    updateAlertUi();
+  }
+  function icsDate(v, isEnd) {
+    var m = /^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})(Z)?)?$/.exec(String(v).trim());
+    if (!m) return null;
+    if (m[4] === undefined) { var d = m[1] + "-" + m[2] + "-" + m[3]; return isEnd ? addDay(d, -1) : d; }
+    if (m[7]) return iso(new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])));
+    return m[1] + "-" + m[2] + "-" + m[3];
+  }
+  function parseIcs(text) {
+    var lines = text.replace(/\r?\n[ \t]/g, "").split(/\r?\n/), ev = null, out = [];
+    lines.forEach(function (l) {
+      if (l === "BEGIN:VEVENT") { ev = {}; return; }
+      if (l === "END:VEVENT") { if (ev && ev.s) out.push(ev); ev = null; return; }
+      if (!ev) return;
+      var i = l.indexOf(":"); if (i < 0) return;
+      var name = l.slice(0, i).split(";")[0].toUpperCase(), val = l.slice(i + 1);
+      if (name === "DTSTART") ev.s = val; else if (name === "DTEND") ev.e = val; else if (name === "SUMMARY") ev.n = val;
+    });
+    var res = [];
+    out.forEach(function (x) {
+      var s = icsDate(x.s, false), e = x.e ? icsDate(x.e, true) : s;
+      if (!s) return; if (!e || e < s) e = s;
+      res.push({ start: s, end: e });
+    });
+    return res;
+  }
+  $("blockForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var carId = $("bkCar").value, f = $("bkFrom").value, t = $("bkTo").value, er = $("bkErr");
+    if (!carId) { er.textContent = "Add a car listing first."; return; }
+    if (!f || !t) { er.textContent = "Choose the first and last blocked day."; return; }
+    if (t < f) { er.textContent = "The last day must be on or after the first day."; $("bkTo").focus(); return; }
+    er.textContent = "";
+    blocks.push({ id: newId(), carId: carId, start: f, end: t, source: "manual" });
+    saveBlocks(); $("bkFrom").value = ""; $("bkTo").value = ""; refresh();
+  });
+  $("icsForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var er = $("imErr"), carId = $("imCar").value, file = $("imFile").files && $("imFile").files[0];
+    if (!carId) { er.textContent = "Add a car listing first."; return; }
+    if (!file) { er.textContent = "Choose the calendar file you exported."; return; }
+    var r = new FileReader();
+    r.onload = function () {
+      var evs = parseIcs(String(r.result));
+      if (!evs.length) { er.style.color = ""; er.textContent = "No bookings found in that file."; return; }
+      var today = iso(new Date()), n = 0;
+      blocks = blocks.filter(function (b) { return !(b.carId === carId && b.source === "turo"); });
+      evs.forEach(function (x) { if (x.end >= today) { blocks.push({ id: newId(), carId: carId, start: x.start, end: x.end, source: "turo" }); n++; } });
+      saveBlocks(); $("imFile").value = "";
+      er.style.color = "var(--olive-lite)"; er.textContent = n + " booked period" + (n === 1 ? "" : "s") + " imported.";
+      refresh();
+    };
+    r.onerror = function () { er.style.color = ""; er.textContent = "That file could not be read."; };
+    r.readAsText(file);
+  });
+  $("bkCar").addEventListener("change", function () { $("bkErr").textContent = ""; });
+  $("imFile").addEventListener("change", function () { $("imErr").textContent = ""; $("imErr").style.color = ""; });
+  $("alertBtn").addEventListener("click", function () {
+    alertsOn = !alertsOn;
+    try { localStorage.setItem(AKEY, alertsOn ? "1" : "0"); } catch (e) {}
+    if (alertsOn) { dismissed = false; try { if (window.Notification && Notification.permission === "default") Notification.requestPermission(); } catch (e) {} }
+    updateAlertUi();
+  });
+  $("alertShow").addEventListener("click", function () { showTab("today"); $("ownerPanel").scrollIntoView({ block: "start" }); });
+  $("alertClose").addEventListener("click", function () { dismissed = true; tripMsg = ""; syncBanner(); });
+
+  // maintenance every 3,000 miles
+  var MKEY = "llr-maint", SERVICE_EVERY = 3000, maint = {};
+  try { maint = JSON.parse(localStorage.getItem(MKEY) || "{}") || {}; } catch (e) { maint = {}; }
+  function saveMaint() { try { localStorage.setItem(MKEY, JSON.stringify(maint)); return true; } catch (e) { return false; } }
+  function fmtMiles(n) { return Number(n).toLocaleString("en-US"); }
+  function mx(id) { if (!maint[id]) maint[id] = { current: null, lastService: null, log: [] }; return maint[id]; }
+  function mxState(id) {
+    var m = maint[id];
+    if (!m || m.current == null || m.lastService == null) return { known: false };
+    var since = m.current - m.lastService, left = SERVICE_EVERY - since;
+    return { known: true, current: m.current, since: since, left: left, next: m.lastService + SERVICE_EVERY, due: since >= SERVICE_EVERY, soon: since < SERVICE_EVERY && left <= 300 };
+  }
+  function isDue(id) { var s = mxState(id); return !!(s.known && s.due); }
+  function serviceDue() { return cars().filter(function (c) { return isDue(c.id); }); }
+  function serviceMsg(sd) {
+    return "Service required: " + sd.map(function (c) { return c.name; }).join(", ") + (sd.length > 1 ? " have" : " has") + " reached 3,000 miles. Off booking until serviced.";
+  }
+  function recordMiles(id, miles, by, ref, when) {
+    var m = mx(id), wasDue = isDue(id);
+    if (m.lastService == null) m.lastService = miles;
+    m.current = by === "host" ? miles : Math.max(m.current || 0, miles);
+    m.log.unshift({ miles: miles, date: iso(new Date()), by: by, ref: ref || "", when: when || "" });
+    m.log = m.log.slice(0, 30);
+    saveMaint();
+    if (!wasDue && isDue(id)) { dismissed = false; fireAlert(); }
+  }
+  function fillCarSelect(id) {
+    var sel = $(id), prev = sel.value; sel.innerHTML = "";
+    cars().forEach(function (c) { var o = document.createElement("option"); o.value = c.id; o.textContent = c.name; sel.appendChild(o); });
+    if (prev && byId(prev)) sel.value = prev;
+  }
+  function renderMx() {
+    fillCarSelect("mxCar"); fillCarSelect("odCar");
+    var box = $("mxList"); box.innerHTML = "";
+    cars().forEach(function (c) {
+      var s = mxState(c.id), main = c.name + ": ", sub;
+      if (!s.known) { main += "no reading yet"; sub = "Enter the odometer reading to start tracking."; }
+      else if (s.due) { main += "SERVICE DUE"; sub = fmtMiles(s.current) + " mi now, " + fmtMiles(s.since) + " mi since last service. Off booking until you log the service."; }
+      else { main += fmtMiles(s.left) + " mi until service" + (s.soon ? " (due soon)" : ""); sub = fmtMiles(s.current) + " mi now. Next service at " + fmtMiles(s.next) + " mi."; }
+      var last = maint[c.id] && maint[c.id].log[0];
+      if (last) sub += " Last entry by " + (last.by === "host" ? "you" : "customer " + last.ref) + " on " + fmtShort(last.date) + ".";
+      var r = row(main, sub, []);
+      if (s.known && (s.due || s.soon)) r.firstChild.firstChild.style.color = s.due ? "var(--danger)" : "var(--orange)";
+      if (s.known && s.due) r.firstChild.firstChild.style.fontWeight = "700";
+      box.appendChild(r);
+    });
+  }
+  function hostMiles() {
+    var er = $("mxErr"), carId = $("mxCar").value, miles = parseInt($("mxMiles").value, 10);
+    er.style.color = "";
+    if (!carId) { er.textContent = "Add a car listing first."; return null; }
+    if (!(miles >= 0)) { er.textContent = "Enter the odometer reading in miles."; $("mxMiles").focus(); return null; }
+    er.textContent = "";
+    return { carId: carId, miles: miles };
+  }
+  function mxDone(text) { var er = $("mxErr"); er.style.color = "var(--olive-lite)"; er.textContent = text; $("mxMiles").value = ""; refresh(); }
+  $("mxForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var h = hostMiles(); if (!h) return;
+    var m = maint[h.carId];
+    if (m && m.lastService != null && h.miles < m.lastService) { $("mxErr").textContent = "That reading is lower than the last service at " + fmtMiles(m.lastService) + " miles. Check the odometer."; return; }
+    recordMiles(h.carId, h.miles, "host");
+    mxDone("Reading saved: " + fmtMiles(h.miles) + " miles.");
+  });
+  $("mxService").addEventListener("click", function () {
+    var h = hostMiles(); if (!h) return;
+    var m = mx(h.carId);
+    m.current = h.miles; m.lastService = h.miles;
+    m.log.unshift({ miles: h.miles, date: iso(new Date()), by: "host", service: true });
+    m.log = m.log.slice(0, 30);
+    saveMaint();
+    mxDone("Service logged at " + fmtMiles(h.miles) + " miles. Next service due at " + fmtMiles(h.miles + SERVICE_EVERY) + " miles. The car is back on booking.");
+  });
+  // trip check-in: 6 photos, mileage, gas
+  var SHOTS = [["front","Front"],["back","Back"],["left","Driver side"],["right","Passenger side"],["interior","Interior"],["dash","Dashboard"]];
+  var CKEY = "llr-checkins", checkins = [];
+  try { checkins = JSON.parse(localStorage.getItem(CKEY) || "[]") || []; } catch (e) { checkins = []; }
+  function saveCheckins() { try { localStorage.setItem(CKEY, JSON.stringify(checkins)); return true; } catch (e) { return false; } }
+  function checkedIn(ref, when) { return checkins.some(function (k) { return k.ref === ref && k.when === when; }); }
+  function shrinkTo(file, max, q) {
+    return new Promise(function (resolve) {
+      var r = new FileReader();
+      r.onload = function () {
+        var im = new Image();
+        im.onload = function () {
+          var k = Math.min(1, max / Math.max(im.width, im.height)), cv = document.createElement("canvas");
+          cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k);
+          cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
+          resolve(cv.toDataURL("image/jpeg", q));
+        };
+        im.onerror = function () { resolve(null); };
+        im.src = r.result;
+      };
+      r.onerror = function () { resolve(null); };
+      r.readAsDataURL(file);
+    });
+  }
+  function clearPreview(key) { var pv = $("pv-" + key); pv.innerHTML = ""; pv.textContent = "No photo"; }
+  SHOTS.forEach(function (s) {
+    $("ph-" + s[0]).addEventListener("change", function () {
+      var f = this.files && this.files[0], pv = $("pv-" + s[0]);
+      if (!f) { clearPreview(s[0]); return; }
+      pv.textContent = "";
+      var im = document.createElement("img"); im.alt = s[1] + " photo"; im.src = URL.createObjectURL(f);
+      im.onload = function () { URL.revokeObjectURL(im.src); };
+      pv.appendChild(im);
+    });
+  });
+  $("odoForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var er = $("odErr"), ref = $("odRef").value.trim().toUpperCase(), carId = $("odCar").value, miles = parseInt($("odMiles").value, 10), fuel = $("odFuel").value, when = $("odWhen").value;
+    er.style.color = "";
+    if (!/^LLR-[A-Z0-9]{3,8}$/.test(ref)) { er.textContent = "Enter your booking reference, like LLR-AB12CD."; $("odRef").focus(); return; }
+    if (!carId) { er.textContent = "Choose the car you rented."; return; }
+    if (!(miles >= 0)) { er.textContent = "Enter the odometer reading in miles."; $("odMiles").focus(); return; }
+    var m = maint[carId];
+    if (m && m.current != null && miles < m.current) { er.textContent = "That reading is lower than the car's last recorded mileage. Check the odometer and try again."; $("odMiles").focus(); return; }
+    if (!fuel) { er.textContent = "Choose the gas level."; $("odFuel").focus(); return; }
+    var missing = SHOTS.filter(function (s) { var f = $("ph-" + s[0]).files; return !(f && f[0]); });
+    if (missing.length) {
+      er.textContent = "Add the " + missing.map(function (s) { return s[1].toLowerCase(); }).join(", ") + " photo" + (missing.length > 1 ? "s" : "") + ".";
+      $("ph-" + missing[0][0]).focus(); return;
+    }
+    er.style.color = "var(--muted)"; er.textContent = "Saving your check-in...";
+    Promise.all(SHOTS.map(function (s) { return shrinkTo($("ph-" + s[0]).files[0], 640, 0.6); })).then(function (imgs) {
+      if (imgs.some(function (x) { return !x; })) { er.style.color = ""; er.textContent = "One of the photos could not be read. Retake it and try again."; return; }
+      var photos = {}; SHOTS.forEach(function (s, i) { photos[s[0]] = imgs[i]; });
+      checkins.unshift({ id: "k" + Date.now(), ref: ref, carId: carId, when: when, miles: miles, fuel: fuel, at: new Date().toISOString(), photos: photos });
+      checkins = checkins.slice(0, 12);
+      var ok = saveCheckins();
+      if (!ok) { checkins = checkins.slice(0, 3); ok = saveCheckins(); }
+      recordMiles(carId, miles, "customer", ref, when);
+      SHOTS.forEach(function (s) { $("ph-" + s[0]).value = ""; clearPreview(s[0]); });
+      $("odMiles").value = ""; $("odFuel").value = "";
+      er.style.color = "var(--olive-lite)";
+      er.textContent = (when === "pickup" ? "Pickup" : "Return") + " check-in complete: " + fmtMiles(miles) + " miles, gas " + fuel + ", 6 photos." + (ok ? "" : " This device ran out of space to keep the photos.");
+      refresh();
+    });
+  });
+
+  // upcoming trips and 30-minute alerts
+  var tripMsg = "";
+  function tripStart(b) { return b.time ? new Date(b.start + "T" + b.time + ":00") : null; }
+  function renderTrips() {
+    var box = $("tripList"); box.innerHTML = "";
+    var today = iso(new Date());
+    var list = blocks.filter(function (b) { return b.end >= today; }).sort(function (a, b) {
+      var x = a.start + (a.time || "99:99"), y = b.start + (b.time || "99:99"); return x < y ? -1 : x > y ? 1 : 0;
+    });
+    if (!list.length) { var p = document.createElement("p"); p.className = "hint"; p.textContent = "No upcoming trips."; box.appendChild(p); return; }
+    list.forEach(function (b) {
+      var src = b.source === "website" ? "Website" : b.source === "turo" ? "Turo" : "Blocked by you";
+      var main = fmtDate(b.start) + (b.time ? " · " + fmtTime(b.time) : "") + " · " + carName(b.carId);
+      var sub = src + (b.name ? " · " + b.name : "") + (b.ref ? " · " + b.ref : "") + (b.how ? " · " + (b.how === "delivery" ? "Delivery" : "Self pickup") : "") + " · Returns " + fmtShort(b.end);
+      if (b.ref) sub += " · Pickup check-in: " + (checkedIn(b.ref, "pickup") ? "done" : "missing");
+      var lab = document.createElement("label"); lab.className = "tt"; lab.htmlFor = "tt-" + b.id; lab.textContent = "Start";
+      var inp = document.createElement("input"); inp.type = "time"; inp.id = "tt-" + b.id; inp.value = b.time || "";
+      inp.addEventListener("change", function () { b.time = inp.value; b.alerted30 = false; saveBlocks(); renderTrips(); checkTrips(); });
+      lab.appendChild(inp);
+      var r = row(main, sub, [lab]);
+      var t = tripStart(b), mins = t ? (t.getTime() - Date.now()) / 60000 : null;
+      if (mins != null && mins <= 120 && mins > -60) r.firstChild.firstChild.style.color = "var(--orange)";
+      box.appendChild(r);
+    });
+  }
+  function renderCheckins() {
+    var box = $("ckList"); box.innerHTML = "";
+    if (!checkins.length) { var p = document.createElement("p"); p.className = "hint"; p.textContent = "No check-ins yet."; box.appendChild(p); return; }
+    checkins.forEach(function (k) {
+      var at = new Date(k.at);
+      var rm = document.createElement("button"); rm.type = "button"; rm.className = "rm"; rm.textContent = "Remove";
+      rm.addEventListener("click", function () { checkins = checkins.filter(function (z) { return z.id !== k.id; }); saveCheckins(); refresh(); });
+      box.appendChild(row(k.ref + " · " + carName(k.carId) + " · " + (k.when === "pickup" ? "Pickup" : "Return"),
+        at.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + " · " + fmtMiles(k.miles) + " mi · Gas " + k.fuel, [rm]));
+      var th = document.createElement("div"); th.className = "thumbs";
+      SHOTS.forEach(function (s) {
+        if (!k.photos || !k.photos[s[0]]) return;
+        var fig = document.createElement("figure"), im = document.createElement("img"), cap = document.createElement("figcaption");
+        im.src = k.photos[s[0]]; im.alt = s[1] + " photo, " + k.ref; cap.textContent = s[1];
+        fig.appendChild(im); fig.appendChild(cap); th.appendChild(fig);
+      });
+      box.appendChild(th);
+    });
+  }
+  function checkTrips() {
+    if (!isOwner()) return;
+    var now = Date.now();
+    var due = blocks.filter(function (b) { var t = tripStart(b); return t && !b.alerted30 && t.getTime() - now <= 30 * 60000 && t.getTime() > now - 5 * 60000; });
+    if (!due.length) return;
+    due.forEach(function (b) { b.alerted30 = true; }); saveBlocks();
+    var b = due[0], mins = Math.max(0, Math.round((tripStart(b).getTime() - now) / 60000));
+    tripMsg = "Trip starts " + (mins ? "in " + mins + " min" : "now") + ": " + carName(b.carId) + " at " + fmtTime(b.time) + (b.name ? " for " + b.name : "") + (due.length > 1 ? " (+" + (due.length - 1) + " more)" : "");
+    dismissed = false; syncBanner(); beep(); notify(tripMsg); renderTrips();
+  }
+  setInterval(checkTrips, 60 * 1000);
+
+  // owner dashboard
+  var TABS = ["today", "cars", "deals", "calendar", "service", "payments"];
+  function showTab(name) {
+    TABS.forEach(function (t) {
+      var on = t === name, b = $("tab-" + t);
+      b.setAttribute("aria-selected", on ? "true" : "false"); b.tabIndex = on ? 0 : -1;
+      $("pane-" + t).hidden = !on;
+    });
+    try { localStorage.setItem("llr-tab", name); } catch (e) {}
+  }
+  TABS.forEach(function (t, i) {
+    var b = $("tab-" + t);
+    b.addEventListener("click", function () { showTab(t); });
+    b.addEventListener("keydown", function (ev) {
+      if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
+      var n = TABS[(i + (ev.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length];
+      showTab(n); $("tab-" + n).focus();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-go]"), function (b) {
+    b.addEventListener("click", function () { showTab(b.getAttribute("data-go")); $("pane-" + b.getAttribute("data-go")).scrollIntoView({ block: "nearest" }); });
+  });
+  (function () { var st = "today"; try { var v = localStorage.getItem("llr-tab"); if (TABS.indexOf(v) >= 0) st = v; } catch (e) {} showTab(st); })();
+  function setTile(id, n) { var el = $(id); el.textContent = String(n); el.parentNode.classList.toggle("hot", n > 0); }
+  function renderSummary() {
+    var today = iso(new Date());
+    setTile("sumTrips", blocks.filter(function (b) { return b.start === today; }).length);
+    setTile("sumCheck", blocks.filter(function (b) { return b.source === "website" && b.ref && b.start <= today && b.end >= today && !checkedIn(b.ref, "pickup"); }).length);
+    setTile("sumTuro", pendingTuro().length);
+    setTile("sumService", serviceDue().length);
+  }
+  $("dashLogout").addEventListener("click", function () { setOwner(false); window.scrollTo(0, 0); });
+
+  // how-to instructions and animated video
+  var HOWTO = {"en": {"name": "English", "dir": "ltr", "title": "How to get your car", "sub": "Everything is contactless. Follow these steps, or press play to watch.", "play": "Play", "pause": "Pause", "replay": "Watch again", "step": "Step", "steps": [["Book and pay", "Book on this website and pay by card. You get a booking reference like LLR-AB12CD."], ["Verify your ID", "Verify your driver's license. After that, we text and email your pickup location and lockbox code."], ["Find the car", "At your pickup time, go to the address we sent. Match the license plate with the one in the message."], ["Open the lockbox", "Enter your code on the lockbox, take the key, and close the box."], ["Check in", "Before you drive, take 6 photos around the car and record the mileage and gas level in Trip check-in."], ["Drive, then return", "Enjoy your trip. To return, park in the same spot, do the return check-in, put the key back in the lockbox and lock it."]]}, "es": {"name": "Español", "dir": "ltr", "title": "Cómo recoger tu auto", "sub": "Todo es sin contacto. Sigue estos pasos o presiona reproducir para ver el video.", "play": "Reproducir", "pause": "Pausa", "replay": "Ver de nuevo", "step": "Paso", "steps": [["Reserva y paga", "Reserva en este sitio web y paga con tarjeta. Recibirás un número de reserva como LLR-AB12CD."], ["Verifica tu identidad", "Verifica tu licencia de conducir. Después te enviaremos por mensaje y correo el lugar de recogida y el código de la caja de llaves."], ["Encuentra el auto", "A la hora de recogida, ve a la dirección que te enviamos. Confirma que la placa coincida con la del mensaje."], ["Abre la caja de llaves", "Ingresa tu código en la caja, toma la llave y cierra la caja."], ["Haz el check-in", "Antes de manejar, toma 6 fotos alrededor del auto y anota el millaje y el nivel de gasolina en la sección Trip check-in."], ["Maneja y devuelve", "Disfruta tu viaje. Para devolverlo, estaciona en el mismo lugar, haz el check-in de devolución, guarda la llave en la caja y ciérrala."]]}, "ht": {"name": "Kreyòl ayisyen", "dir": "ltr", "title": "Kijan pou w pran machin ou", "sub": "Tout bagay fèt san kontak. Swiv etap sa yo, oswa peze jwe pou w gade videyo a.", "play": "Jwe", "pause": "Poz", "replay": "Gade ankò", "step": "Etap", "steps": [["Rezève epi peye", "Rezève sou sit entènèt sa a epi peye ak kat. W ap resevwa yon nimewo rezèvasyon tankou LLR-AB12CD."], ["Verifye idantite w", "Verifye lisans chofè w. Apre sa, n ap voye adrès pou w pran machin nan ak kòd bwat kle a pa tèks ak imèl."], ["Jwenn machin nan", "Lè lè a rive, ale nan adrès nou voye a. Asire w nimewo plak la menm ak sa ki nan mesaj la."], ["Louvri bwat kle a", "Antre kòd ou sou bwat la, pran kle a, epi fèmen bwat la."], ["Fè check-in", "Anvan ou kondui, pran 6 foto toutotou machin nan epi note kantite mil ki sou kontè a ak nivo gaz la nan seksyon Trip check-in."], ["Kondui, epi retounen l", "Pwofite vwayaj ou. Pou retounen l, pake nan menm plas la, fè check-in retou a, mete kle a tounen nan bwat la epi fèmen l."]]}, "pt": {"name": "Português", "dir": "ltr", "title": "Como retirar seu carro", "sub": "Tudo é sem contato. Siga estes passos ou aperte play para assistir.", "play": "Assistir", "pause": "Pausar", "replay": "Assistir de novo", "step": "Passo", "steps": [["Reserve e pague", "Reserve neste site e pague com cartão. Você recebe um código de reserva como LLR-AB12CD."], ["Verifique sua identidade", "Verifique sua carteira de motorista. Depois, enviamos por mensagem e e-mail o local de retirada e o código do cofre de chaves."], ["Encontre o carro", "No horário da retirada, vá até o endereço enviado. Confira se a placa é a mesma da mensagem."], ["Abra o cofre de chaves", "Digite seu código no cofre, pegue a chave e feche o cofre."], ["Faça o check-in", "Antes de dirigir, tire 6 fotos ao redor do carro e registre a leitura do odômetro e o nível de combustível na seção Trip check-in."], ["Dirija e devolva", "Aproveite a viagem. Para devolver, estacione no mesmo lugar, faça o check-in de devolução, coloque a chave de volta no cofre e tranque."]]}, "fr": {"name": "Français", "dir": "ltr", "title": "Comment récupérer votre voiture", "sub": "Tout se fait sans contact. Suivez ces étapes ou appuyez sur lecture pour regarder la vidéo.", "play": "Lecture", "pause": "Pause", "replay": "Revoir", "step": "Étape", "steps": [["Réservez et payez", "Réservez sur ce site et payez par carte. Vous recevez un numéro de réservation comme LLR-AB12CD."], ["Vérifiez votre identité", "Faites vérifier votre permis de conduire. Ensuite, nous vous envoyons par SMS et e-mail le lieu de prise en charge et le code de la boîte à clés."], ["Trouvez la voiture", "À l'heure prévue, rendez-vous à l'adresse envoyée. Vérifiez que la plaque correspond à celle du message."], ["Ouvrez la boîte à clés", "Entrez votre code sur la boîte, prenez la clé et refermez la boîte."], ["Faites le check-in", "Avant de partir, prenez 6 photos autour de la voiture et notez le relevé du compteur et le niveau d'essence dans la section Trip check-in."], ["Roulez, puis rendez-la", "Bon voyage. Pour la rendre, garez-vous au même endroit, faites le check-in de retour, remettez la clé dans la boîte et verrouillez-la."]]}, "ar": {"name": "العربية", "dir": "rtl", "title": "كيف تستلم سيارتك", "sub": "كل شيء يتم دون تواصل مباشر. اتبع هذه الخطوات أو اضغط تشغيل لمشاهدة الفيديو.", "play": "تشغيل", "pause": "إيقاف مؤقت", "replay": "شاهد مرة أخرى", "step": "الخطوة", "steps": [["احجز وادفع", "احجز على هذا الموقع وادفع بالبطاقة. ستحصل على رقم حجز مثل LLR-AB12CD."], ["تحقق من هويتك", "تحقق من رخصة القيادة الخاصة بك. بعد ذلك نرسل لك عبر رسالة نصية وبريد إلكتروني موقع الاستلام ورمز صندوق المفاتيح."], ["اعثر على السيارة", "في موعد الاستلام، اذهب إلى العنوان الذي أرسلناه. تأكد من أن رقم اللوحة يطابق الرقم في الرسالة."], ["افتح صندوق المفاتيح", "أدخل رمزك في الصندوق، وخذ المفتاح، ثم أغلق الصندوق."], ["سجّل الاستلام", "قبل القيادة، التقط 6 صور حول السيارة وسجّل قراءة العداد ومستوى الوقود في قسم Trip check-in."], ["قُد ثم أعد السيارة", "استمتع برحلتك. عند الإرجاع، اركن في المكان نفسه، وسجّل الإرجاع، وأعد المفتاح إلى الصندوق وأغلقه."]]}, "zh": {"name": "中文", "dir": "ltr", "title": "如何取车", "sub": "全程无接触。按照以下步骤操作，或点击播放观看视频。", "play": "播放", "pause": "暂停", "replay": "再看一次", "step": "步骤", "steps": [["预订并付款", "在本网站预订并用银行卡付款。您会收到一个预订编号，例如 LLR-AB12CD。"], ["验证身份", "验证您的驾照。之后我们会通过短信和电子邮件发送取车地点和钥匙盒密码。"], ["找到车辆", "在取车时间前往我们发送的地址，核对车牌号与信息中的一致。"], ["打开钥匙盒", "在钥匙盒上输入密码，取出钥匙，然后关好钥匙盒。"], ["办理取车检查", "开车前，在车辆四周拍 6 张照片，并在 Trip check-in 栏目中记录里程表读数和油量。"], ["驾驶并还车", "祝您旅途愉快。还车时，停回原来的位置，完成还车检查，把钥匙放回钥匙盒并锁好。"]]}}, HV_ORDER = ["en", "es", "ht", "pt", "fr", "ar", "zh"];
+  var hvLang = "en", hvStep = 0, hvTimer = null, hvPlaying = false, HV_MS = 5200;
+  try { var sl = localStorage.getItem("llr-lang"); if (HOWTO[sl]) hvLang = sl; } catch (e) {}
+  function hvRender() {
+    var t = HOWTO[hvLang], body = $("howtoBody");
+    body.setAttribute("lang", hvLang); body.setAttribute("dir", t.dir);
+    $("hvTitle").textContent = t.title; $("hvSub").textContent = t.sub;
+    HV_ORDER.forEach(function (k) { $("lang-" + k).setAttribute("aria-pressed", k === hvLang ? "true" : "false"); });
+    t.steps.forEach(function (s, i) {
+      var b = $("hs-" + i); b.querySelector("b").textContent = s[0]; b.querySelector("span span").textContent = s[1];
+      if (i === hvStep) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+      var seg = $("seg-" + i); seg.className = "seg" + (i < hvStep ? " done" : i === hvStep ? " cur" : "");
+      seg.setAttribute("aria-label", t.step + " " + (i + 1));
+    });
+    $("hvCapTitle").textContent = t.step + " " + (hvStep + 1) + ": " + t.steps[hvStep][0];
+    $("hvCapText").textContent = t.steps[hvStep][1];
+    $("hvPlay").textContent = hvPlaying ? t.pause : (hvStep === 5 && hvDone ? t.replay : t.play);
+  }
+  var hvDone = false;
+  function hvShow(i) {
+    hvStep = i;
+    Array.prototype.forEach.call(document.querySelectorAll(".hv-scene"), function (g) {
+      g.classList.remove("on");
+      if (+g.getAttribute("data-scene") === i) { void g.getBoundingClientRect(); g.classList.add("on"); }
+    });
+    hvRender();
+  }
+  function hvStop() { hvPlaying = false; clearTimeout(hvTimer); hvRender(); }
+  function hvTick() {
+    if (hvStep < 5) { hvShow(hvStep + 1); hvTimer = setTimeout(hvTick, HV_MS); }
+    else { hvDone = true; hvStop(); }
+  }
+  $("hvPlay").addEventListener("click", function () {
+    if (hvPlaying) { hvStop(); return; }
+    if (hvDone && hvStep === 5) { hvDone = false; hvShow(0); } else { hvShow(hvStep); }
+    hvPlaying = true; hvRender(); clearTimeout(hvTimer); hvTimer = setTimeout(hvTick, HV_MS);
+  });
+  for (var hi = 0; hi < 6; hi++) (function (i) {
+    function jump() { hvDone = false; hvShow(i); if (hvPlaying) { clearTimeout(hvTimer); hvTimer = setTimeout(hvTick, HV_MS); } }
+    $("hs-" + i).addEventListener("click", jump); $("seg-" + i).addEventListener("click", jump);
+  })(hi);
+  HV_ORDER.forEach(function (k) {
+    $("lang-" + k).addEventListener("click", function () { hvLang = k; try { localStorage.setItem("llr-lang", k); } catch (e) {} hvRender(); });
+  });
+  hvRender();
+
+  // owner login
+  var OWNER_HASH = "e04cf24c8a217b0dd0c6f9fe8c43098a81b2c9c28f24bd327130bad6cc2079d8";
+  function isOwner() { return document.body.classList.contains("owner"); }
+  function setOwner(on) {
+    document.body.classList.toggle("owner", on);
+    $("ownerLogin").textContent = on ? "Log out" : "Login";
+    try { if (on) sessionStorage.setItem("llr-owner", "1"); else sessionStorage.removeItem("llr-owner"); } catch (e) {}
+    if (!on) $("ownerPanel").open = false;
+  }
+  function sha256(ascii) {
+    function rr(v, n) { return (v >>> n) | (v << (32 - n)); }
+    var K = [], H = [], primes = 0, cand = 2;
+    while (primes < 64) {
+      var isP = true; for (var d = 2; d * d <= cand; d++) if (cand % d === 0) { isP = false; break; }
+      if (isP) { if (primes < 8) H[primes] = (Math.pow(cand, 1 / 2) * 4294967296) | 0; K[primes] = (Math.pow(cand, 1 / 3) * 4294967296) | 0; primes++; }
+      cand++;
+    }
+    var bytes = unescape(encodeURIComponent(ascii)), words = [], bitLen = bytes.length * 8, i, j;
+    bytes += "\x80"; while (bytes.length % 64 - 56) bytes += "\x00";
+    for (i = 0; i < bytes.length; i++) words[i >> 2] |= bytes.charCodeAt(i) << ((3 - i) % 4) * 8;
+    words[words.length] = (bitLen / 4294967296) | 0; words[words.length] = bitLen | 0;
+    for (j = 0; j < words.length;) {
+      var w = words.slice(j, j += 16), old = H.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2], a = H[0], e = H[4];
+        if (i >= 16) w[i] = (w[i - 16] + (rr(w15, 7) ^ rr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rr(w2, 17) ^ rr(w2, 19) ^ (w2 >>> 10))) | 0;
+        var t1 = H[7] + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & H[5]) ^ (~e & H[6])) + K[i] + (w[i] | 0);
+        var t2 = (rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & H[1]) ^ (a & H[2]) ^ (H[1] & H[2]));
+        H = [(t1 + t2) | 0].concat(H); H[4] = (H[4] + t1) | 0; H.length = 8;
+      }
+      for (i = 0; i < 8; i++) H[i] = (H[i] + old[i]) | 0;
+    }
+    var out = ""; for (i = 0; i < 8; i++) for (j = 3; j + 1; j--) { var b = (H[i] >> (j * 8)) & 255; out += (b < 16 ? "0" : "") + b.toString(16); }
+    return out;
+  }
+  try { if (sessionStorage.getItem("llr-owner") === "1") setOwner(true); } catch (e) {}
+  $("ownerLogin").addEventListener("click", function () {
+    if (isOwner()) { setOwner(false); return; }
+    $("loginErr").textContent = ""; $("loginPass").value = ""; $("loginBox").hidden = false; $("loginPass").focus();
+  });
+  $("loginCancel").addEventListener("click", function () { $("loginBox").hidden = true; });
+  $("loginBox").addEventListener("click", function (ev) { if (ev.target === this) this.hidden = true; });
+  $("loginForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var v = $("loginPass").value;
+    if (!v) { $("loginErr").textContent = "Enter your passcode."; return; }
+    var h = sha256(v.trim().toLowerCase().replace(/\s+/g, ""));
+    if (h !== OWNER_HASH) { $("loginErr").textContent = "That passcode is not right."; $("loginPass").select(); return; }
+    $("loginBox").hidden = true; setOwner(true); syncBanner(); checkTrips();
+    showTab("today"); $("ownerPanel").scrollIntoView({ block: "start" });
+  });
+
+  // ID verification
+  function idUrl(v) {
+    try { var u = new URL(String(v || "").trim()); return u.protocol === "https:" ? u.toString() : null; } catch (e) { return null; }
+  }
+  function setPayGate() {
+    var gated = !!idUrl(SITE.idLink) && !$("idDone").checked, pl = $("payLink");
+    if (gated) { pl.setAttribute("aria-disabled", "true"); pl.style.opacity = "0.5"; }
+    else { pl.removeAttribute("aria-disabled"); pl.style.opacity = ""; }
+  }
+  $("idDone").addEventListener("change", setPayGate);
+  $("payLink").addEventListener("click", function (ev) {
+    if (this.getAttribute("aria-disabled") === "true") {
+      ev.preventDefault();
+      $("payNote").textContent = "Verify your ID first, then tick the box to continue to payment.";
+    }
+  });
+
+  // driver application
+  $("applyForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var er = $("apErr");
+    function bad(m, id) { er.textContent = m; if (id) $(id).focus(); }
+    var plats = [];
+    ["Uber", "Lyft", "DoorDash"].forEach(function (p) { if ($("ap" + p).checked) plats.push(p); });
+    var other = $("apOther").value.trim(); if (other) plats.push(other);
+    var name = $("apName").value.trim();
+    if (!name) return bad("Enter your full name.", "apName");
+    if (!/^\S+@\S+\.\S+$/.test($("apEmail").value)) return bad("Enter a valid email address.", "apEmail");
+    if ($("apPhone").value.replace(/\D/g, "").length < 10) return bad("Enter a phone number with area code.", "apPhone");
+    if (!$("apState").value.trim()) return bad("Enter the state on your driver's license.", "apState");
+    if (!plats.length) return bad("Choose at least one service you drive for.", "apUber");
+    if (!$("apAgree").checked) return bad("Please confirm you understand the approval and no smoking rules.", "apAgree");
+    er.textContent = "";
+    var text = [
+      "DRIVER APPLICATION - Logan Loop Rentals",
+      "Name: " + name,
+      "Email: " + $("apEmail").value.trim(),
+      "Phone: " + $("apPhone").value.trim(),
+      "License state: " + $("apState").value.trim(),
+      "Drives for: " + plats.join(", "),
+      "Approval status: " + $("apStatus").value,
+      "Needs a car for: " + $("apTerm").value,
+      "Date needed: " + ($("apStart").value ? fmtDate($("apStart").value) : "Not given"),
+      "Notes: " + ($("apNote").value.trim() || "None"),
+      "Agreed to approval and no smoking rules: Yes"
+    ].join("\n");
+    $("apText").value = text;
+    var mail = $("apMail");
+    if (SITE.applyEmail) {
+      mail.href = "mailto:" + SITE.applyEmail + "?subject=" + encodeURIComponent("Driver application: " + name) + "&body=" + encodeURIComponent(text);
+      mail.hidden = false;
+      $("apTo").textContent = "Press Email application, or copy it and send it to " + SITE.applyEmail + ".";
+    } else {
+      mail.hidden = true;
+      $("apTo").textContent = "Our application email is not set up on this page yet.";
+    }
+    $("apCopied").textContent = "";
+    $("applyForm").hidden = true; $("apResult").hidden = false;
+    $("apResult").scrollIntoView({ block: "center" });
+  });
+  $("apCopy").addEventListener("click", function () {
+    var ta = $("apText");
+    function fallback() { ta.focus(); ta.select(); $("apCopied").textContent = "Select and copy the text above."; }
+    try {
+      navigator.clipboard.writeText(ta.value).then(function () { $("apCopied").textContent = "Copied."; }, fallback);
+    } catch (e) { fallback(); }
+  });
+  $("apAgain").addEventListener("click", function () { $("apResult").hidden = true; $("applyForm").hidden = false; $("applyForm").scrollIntoView({ block: "start" }); });
+
+  // owner: add listing
+  function shrink(file, cb) {
+    var r = new FileReader();
+    r.onload = function () {
+      var im = new Image();
+      im.onload = function () {
+        var max = 800, k = Math.min(1, max / im.width), cv = document.createElement("canvas");
+        cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k);
+        cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
+        cb(cv.toDataURL("image/jpeg", 0.8));
+      };
+      im.onerror = function () { cb(null); };
+      im.src = r.result;
+    };
+    r.onerror = function () { cb(null); };
+    r.readAsDataURL(file);
+  }
+  $("addForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var name = $("aName").value.trim(), rate = parseFloat($("aRate").value), seats = parseInt($("aSeats").value, 10);
+    if (!name) { $("addErr").textContent = "Enter a car name."; $("aName").focus(); return; }
+    if (!(rate > 0)) { $("addErr").textContent = "Enter a daily rate above $0."; $("aRate").focus(); return; }
+    if (!(seats > 0)) { $("addErr").textContent = "Enter the number of seats."; $("aSeats").focus(); return; }
+    var aLink = $("aLink").value.trim();
+    if (aLink && !stripeUrl(aLink)) { $("addErr").textContent = "The Stripe link should start with https://buy.stripe.com/"; $("aLink").focus(); return; }
+    $("addErr").textContent = "";
+    function finish(img) {
+      custom.unshift({ id: "c" + Date.now(), name: name, type: $("aType").value, seats: seats, trans: $("aTrans").value, fuel: $("aFuel").value, rate: rate, img: img || null, link: aLink ? stripeUrl(aLink) : "" });
+      var ok = persist();
+      $("addForm").reset(); $("aSeats").value = 5;
+      if (!ok) $("addErr").textContent = "Listing added, but this browser could not save it. It will be gone after you leave the page.";
+      refresh();
+    }
+    var f = $("aPhoto").files && $("aPhoto").files[0];
+    if (f) shrink(f, finish); else finish(null);
+  });
+  $("hideSamples").addEventListener("click", function () { hideSamples = true; persist(); refresh(); });
+
+  setDefaults(); refresh();
+})();
+</script>
